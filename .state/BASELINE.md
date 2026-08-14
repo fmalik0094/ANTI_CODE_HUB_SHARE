@@ -1,0 +1,3 @@
+# BASELINE CONTRACT: ANTI_CODE_HUB_SPEC_VAULT
+Path: C:\01_LOCAL_CODING_F.M\ANTI_CODE-HUB
+Architecture: Anti-Code Hub Standard Tier 1

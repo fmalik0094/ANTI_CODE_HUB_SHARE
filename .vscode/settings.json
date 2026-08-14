@@ -1,0 +1,22 @@
+{
+    "search.exclude": {
+        "**/logs": true,
+        "**/temp": true,
+        "**/*.xlsm": true,
+        "**/*.xlsx": true,
+        "**/*.csv": true,
+        "**/*.pdf": true,
+        "**/.agents/states": true,
+        "**/.venv": true,
+        "**/__pycache__": true
+    },
+    "files.watcherExclude": {
+        "**/logs/**": true,
+        "**/temp/**": true,
+        "**/.agents/states/**": true,
+        "**/.venv/**": true,
+        "**/__pycache__/**": true
+    },
+    "editor.formatOnSave": true,
+    "chat.permissions.default": "autopilot"
+}

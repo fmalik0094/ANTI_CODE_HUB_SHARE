@@ -1,0 +1,7 @@
+# ARCHITECTURAL DECISIONS LOG
+
+- **Domain**: [INSERT DOMAIN NAME]
+
+## Confirmed Parameters & Rulesets
+* [INSERT LOCKED RULE / CHOICE]
+* [INSERT PARAMETER VALUE]

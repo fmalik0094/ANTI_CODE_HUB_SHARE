@@ -1,0 +1,11 @@
+# EXCLUSION MATRIX: CORE PROTOCOL TOKEN PRESERVATION
+logs/
+temp/
+output/
+artifacts/
+*.csv
+*.xlsm
+*.xlsx
+*.pptx
+*.pdf
+.agents/states/

@@ -1,0 +1,17 @@
+# Symmetrical Token & Indexing Exclusions
+.venv/
+__pycache__/
+node_modules/
+bin/
+obj/
+logs/
+temp/
+*.csv
+*.tsv
+*.xlsx
+*.xlsm
+*.jsonl
+*.zip
+*.tar.gz
+*.pdf
+.agents/states/

@@ -1,0 +1,16 @@
+{
+    "search.exclude": {
+        "**/logs": true,
+        "**/temp": true,
+        "**/*.csv": true,
+        "**/*.xlsm": true,
+        "**/*.pdf": true,
+        "**/.agents/states": true
+    },
+    "files.watcherExclude": {
+        "**/logs/**": true,
+        "**/temp/**": true,
+        "**/.agents/states/**": true
+    },
+    "editor.formatOnSave": true
+}

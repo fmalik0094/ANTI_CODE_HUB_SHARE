@@ -1,0 +1,14 @@
+[agent_orchestration]
+framework = "VSCode-Codex-MultiAgent"
+version = "V1.0"
+default_mode = "PLANNING"
+confidence_threshold = 0.85
+
+[token_management]
+max_context_tokens = 1048576
+buffer_tokens = 24576
+exclusion_mode = "STRICT"
+
+[execution_policies]
+terminal_access = "REQUEST_REVIEW"
+deny_list = ["rm", "sudo", "curl", "wget"]

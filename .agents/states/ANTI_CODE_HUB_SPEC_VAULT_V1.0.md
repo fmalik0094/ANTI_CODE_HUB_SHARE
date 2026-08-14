@@ -1,0 +1,8 @@
+# ANTI_CODE_HUB_SPEC_VAULT V1.0
+
+**STATE CHECKPOINT:** `ANTI_CODE_HUB_SPEC_VAULT-V1.0`
+**DOMAIN STATUS:** PRODUCTION ACTIVE
+**WORKSPACE:** `C:\01_LOCAL_CODING_F.M\ANTI_CODE-HUB`
+
+## Overview
+Initial domain state for ANTI_CODE_HUB_SPEC_VAULT under Anti-Code Hub and Topic Hub architecture.
