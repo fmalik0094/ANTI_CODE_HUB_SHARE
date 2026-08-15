@@ -1,4 +1,4 @@
-# Symmetrical Token & Indexing Exclusions
+# Symmetrical Token, CAD & Indexing Exclusions
 .venv/
 __pycache__/
 node_modules/
@@ -14,4 +14,17 @@ temp/
 *.zip
 *.tar.gz
 *.pdf
+*.sldprt
+*.sldasm
+*.slddrw
+*.step
+*.stp
+*.iges
+*.igs
+*.dwg
+*.dxf
+*.prt
+*.asm
+*.stl
+*.obj
 .agents/states/

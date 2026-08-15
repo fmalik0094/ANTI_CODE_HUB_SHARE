@@ -6,6 +6,9 @@
         "**/*.xlsx": true,
         "**/*.csv": true,
         "**/*.pdf": true,
+        "**/*.sldprt": true,
+        "**/*.sldasm": true,
+        "**/*.step": true,
         "**/.agents/states": true,
         "**/.venv": true,
         "**/__pycache__": true

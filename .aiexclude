@@ -1,4 +1,4 @@
-# Anti-Code Hub Security Matrix Exclusions
+# Anti-Code Hub Security & CAD Matrix Exclusions
 .venv
 __pycache__/
 node_modules/
@@ -12,3 +12,16 @@ obj/
 *.zip
 *.tar.gz
 *.pdf
+*.sldprt
+*.sldasm
+*.slddrw
+*.step
+*.stp
+*.iges
+*.igs
+*.dwg
+*.dxf
+*.prt
+*.asm
+*.stl
+*.obj
