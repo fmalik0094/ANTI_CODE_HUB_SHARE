@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(.agents/**)",
+      "Write(src/**)",
+      "Write(outputs/**)",
+      "Write(.agents/states/**)"
+    ],
+    "ask": [
+      "Bash(rm:*)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(sudo:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "WebFetch"
+    ],
+    "deny": [
+      "Write(C:/Windows/**)",
+      "Write(C:/Program Files/**)",
+      "Write(../**)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/*.secret)",
+      "Read(credentials/**)",
+      "Read(config/private/**)",
+      "Read(.env)",
+      "Read(.env.*)"
+    ]
+  }
+}

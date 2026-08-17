@@ -28,3 +28,6 @@ temp/
 *.stl
 *.obj
 .agents/states/
+claude/.agents/states/
+claude/.state/
+claude/.claude/

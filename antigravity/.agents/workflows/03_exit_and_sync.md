@@ -1,7 +1,7 @@
 # COMMAND: INITIATE FULL STATE SERIALIZATION & INDEX SYNC
 # ENGINE: DETERMINISTIC_CONTEXT_SERIALIZATION
 ## DIRECTIVE
-Execute an immediate hard stop on active session trajectories. Output exactly TWO distinct Markdown code blocks: Block 1 (State Binary) and Block 2 (Registry Row). No other text.
+Before compiling, check `.agents/states/_ACTIVE_INDEX.md` for a version newer than the one loaded at session start — VS Code/Codex or Claude Code may have written a state binary since. If so, reconcile against it before overwriting. Then execute an immediate hard stop on active session trajectories. Output exactly TWO distinct Markdown code blocks: Block 1 (State Binary) and Block 2 (Registry Row). No other text.
 ## BLOCK 1: THE STATE BINARY
 Compile the cumulative project timeline and architecture into a single copy-pasteable Markdown block:
 1. **STATE HASH / DOMAIN:** [Increment current version number]
