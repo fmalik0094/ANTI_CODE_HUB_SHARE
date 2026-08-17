@@ -4,8 +4,17 @@ __pycache__/
 node_modules/
 bin/
 obj/
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.secret
+credentials/
+config/private/
 logs/
 temp/
+scratch/
 *.csv
 *.tsv
 *.xlsx
@@ -28,6 +37,3 @@ temp/
 *.stl
 *.obj
 .agents/states/
-claude/.agents/states/
-claude/.state/
-claude/.claude/

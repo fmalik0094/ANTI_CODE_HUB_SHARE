@@ -5,6 +5,8 @@ from pathlib import Path
 REQUIRED_PATHS = [
     ".geminiignore",
     ".vscode/settings.json",
+    ".claude/settings.json",
+    "CLAUDE.md",
     ".aiexclude",
     "AGENTS.md",
     ".agents/rules/global.md",

@@ -1,0 +1,48 @@
+{
+    "permissions": {
+        "allow": [
+            "Read(AGENTS.md)",
+            "Read(.agents/**)",
+            "Read(.state/**)",
+            "Read(docs/**)",
+            "Read(doc_ref/**)",
+            "Read(src/**)",
+            "Read(tests/**)",
+            "Read(validators/**)",
+            "Read(README.md)",
+            "Read(PROJECT_CHAPTERS.md)",
+            "Write(src/**)",
+            "Write(tests/**)",
+            "Write(validators/**)",
+            "Write(docs/**)",
+            "Write(doc_ref/**)",
+            "Write(logs/**)",
+            "Write(.agents/states/**)",
+            "Write(.state/DELTA_LOG.md)"
+        ],
+        "ask": [
+            "Bash(rm:*)",
+            "Bash(git push:*)",
+            "Bash(git push --force:*)",
+            "Bash(git reset --hard:*)",
+            "Bash(git commit:*)",
+            "Bash(sudo:*)",
+            "Bash(curl:*)",
+            "Bash(wget:*)",
+            "WebFetch"
+        ],
+        "deny": [
+            "Write(C:/Windows/**)",
+            "Write(C:/Program Files/**)",
+            "Write(../**)",
+            "Read(**/*.key)",
+            "Read(**/*.pem)",
+            "Read(**/*.secret)",
+            "Read(credentials/**)",
+            "Read(config/private/**)",
+            "Read(.env)",
+            "Read(.env.local)",
+            "Read(.env.*.local)"
+        ]
+    }
+}

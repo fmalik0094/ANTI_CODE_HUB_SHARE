@@ -1,11 +1,20 @@
 # Anti-Code Hub Security & CAD Matrix Exclusions
-claude/.agents/states/
-claude/.state/
 .venv
 __pycache__/
 node_modules/
 bin/
 obj/
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.secret
+credentials/
+config/private/
+logs/
+temp/
+scratch/
 *.csv
 *.tsv
 *.xlsx
