@@ -10,3 +10,7 @@ use `[REDACTED]` and record only credential state.
 
 | Timestamp | Agent ID | Operation | Command / Action | Exit Status | Evidence |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| 2026-08-27 | CDX-01-20260827-MODEL-DOCS-01 | Baseline | Read canonical boot files; verified clean target branch; ran structural validator | Success | `cdx/model-docs-reference`; validator passed before mutation |
+| 2026-08-27 | CDX-01-20260827-MODEL-DOCS-01 | Research | Verified current API model IDs, context/output limits, pricing, and lifecycle notes against official Anthropic, OpenAI, and Google documentation | Success | Live sources recorded in `.agents/resources/MODEL_REFERENCE.md` |
+| 2026-08-27 | CDX-01-20260827-MODEL-DOCS-01 | Mutation | Added on-demand model reference, global discovery rule, source-contract validation, ignored cache path, and delta record | Success | Working-tree diff on `cdx/model-docs-reference` |
+| 2026-08-27 | CDX-01-20260827-MODEL-DOCS-01 | Validation | Ran `python validators/validate_structure.py`, `python -m py_compile validators/validate_structure.py`, and `git diff --check` | Success | Semantic validation, Python compilation, and whitespace checks passed |

@@ -22,8 +22,15 @@ REQUIRED_PATHS = [
     ".state/EXECUTION_LOG.md",
     ".agents/states/_ACTIVE_INDEX.md",
     ".agents/AGENT_REGISTRY.md",
+    ".agents/resources/MODEL_REFERENCE.md",
     ".gitignore",
 ]
+
+REQUIRED_MODEL_SOURCE_URLS = (
+    "https://platform.claude.com/docs/en/about-claude/models/overview",
+    "https://developers.openai.com/api/docs/models",
+    "https://ai.google.dev/gemini-api/docs/models",
+)
 
 # Path fragments that are expected to be absent locally or outside this repo's
 # tree — real by convention/intent, not a structural gap.
@@ -149,6 +156,32 @@ def check_checkpoint_consistency():
     return errors
 
 
+def check_model_reference_contract():
+    """Keep the compact local snapshot anchored to all three live catalogs."""
+    errors = []
+    reference_path = ROOT / ".agents" / "resources" / "MODEL_REFERENCE.md"
+    if not reference_path.exists():
+        return errors  # already reported by check_required_paths
+
+    content = reference_path.read_text(encoding="utf-8")
+    for source_url in REQUIRED_MODEL_SOURCE_URLS:
+        if source_url not in content:
+            errors.append(
+                "MODEL_REFERENCE.md is missing authoritative source URL: "
+                f"{source_url}"
+            )
+
+    verification_dates = re.findall(
+        r"Last verified:\s*\d{4}-\d{2}-\d{2}", content
+    )
+    if len(verification_dates) != 3:
+        errors.append(
+            "MODEL_REFERENCE.md must contain exactly three vendor-section "
+            "'Last verified: YYYY-MM-DD' markers"
+        )
+    return errors
+
+
 def main():
     all_errors = []
     all_errors += check_required_paths()
@@ -159,6 +192,7 @@ def main():
 
     all_errors += check_agent_count_agreement()
     all_errors += check_checkpoint_consistency()
+    all_errors += check_model_reference_contract()
 
     if all_errors:
         print(f"[FAIL] {len(all_errors)} issue(s) found in ANTI_CODE_HUB_SPEC_VAULT:")
