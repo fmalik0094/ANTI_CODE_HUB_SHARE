@@ -1,6 +1,7 @@
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -23,8 +24,19 @@ REQUIRED_PATHS = [
     ".agents/states/_ACTIVE_INDEX.md",
     ".agents/AGENT_REGISTRY.md",
     ".agents/ORIENTATION.md",
+    ".agents/resources/MODEL_REFERENCE.md",
     ".gitignore",
 ]
+
+REQUIRED_REFERENCE_SOURCE_URLS = (
+    "https://platform.claude.com/docs/en/about-claude/models/overview",
+    "https://code.claude.com/docs/en/overview",
+    "https://developers.openai.com/api/docs/models",
+    "https://developers.openai.com/learn/codex",
+    "https://learn.chatgpt.com/docs",
+    "https://ai.google.dev/gemini-api/docs/models",
+    "https://antigravity.google/docs/home",
+)
 
 # Path fragments that are expected to be absent locally or outside this repo's
 # tree — real by convention/intent, not a structural gap.
@@ -173,8 +185,60 @@ def check_checkpoint_consistency():
     return errors
 
 
+def get_model_reference_staleness_warnings(content, today=None):
+    """Report old vendor snapshots without blocking unrelated repository work."""
+    today = today or date.today()
+    warnings = []
+    vendor_dates = re.findall(
+        r"^## (Anthropic|OpenAI|Google)[^\n]*\n\n"
+        r"Last verified:\s*(\d{4}-\d{2}-\d{2})",
+        content,
+        flags=re.MULTILINE,
+    )
+    for vendor, raw_date in vendor_dates:
+        try:
+            verified_on = date.fromisoformat(raw_date)
+        except ValueError:
+            continue
+        age_days = (today - verified_on).days
+        if age_days > 60:
+            warnings.append(
+                f"MODEL_REFERENCE.md {vendor} snapshot is {age_days} days "
+                f"old (last verified {raw_date}); refresh before relying on "
+                "exact values"
+            )
+    return warnings
+
+
+def check_model_reference_contract():
+    """Keep the compact local snapshot anchored to all three live catalogs."""
+    errors = []
+    reference_path = ROOT / ".agents" / "resources" / "MODEL_REFERENCE.md"
+    if not reference_path.exists():
+        return errors, []  # already reported by check_required_paths
+
+    content = reference_path.read_text(encoding="utf-8")
+    for source_url in REQUIRED_REFERENCE_SOURCE_URLS:
+        if source_url not in content:
+            errors.append(
+                "MODEL_REFERENCE.md is missing authoritative source URL: "
+                f"{source_url}"
+            )
+
+    verification_dates = re.findall(
+        r"Last verified:\s*\d{4}-\d{2}-\d{2}", content
+    )
+    if len(verification_dates) != 3:
+        errors.append(
+            "MODEL_REFERENCE.md must contain exactly three vendor-section "
+            "'Last verified: YYYY-MM-DD' markers"
+        )
+    return errors, get_model_reference_staleness_warnings(content)
+
+
 def main():
     all_errors = []
+    all_warnings = []
     all_errors += check_required_paths()
 
     settings_errors, settings_data = check_settings_json_valid()
@@ -183,6 +247,12 @@ def main():
 
     all_errors += check_agent_count_agreement()
     all_errors += check_checkpoint_consistency()
+    model_errors, model_warnings = check_model_reference_contract()
+    all_errors += model_errors
+    all_warnings += model_warnings
+
+    for warning in all_warnings:
+        print(f"[WARN] {warning}")
 
     if all_errors:
         print(f"[FAIL] {len(all_errors)} issue(s) found in ANTI_CODE_HUB_SPEC_VAULT:")

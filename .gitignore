@@ -19,3 +19,4 @@ obj/
 Thumbs.db
 logs/
 temp/
+docs-cache/
