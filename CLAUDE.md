@@ -10,10 +10,13 @@ and `anti-code hub/CLAUDE.md`, which are template content shipped into new
 projects — do not conflate the three; editing this file does not edit those.
 
 ## Boot sequence (every session)
-1. Read `.agents/rules/global.md` — DENY > ASK > ALLOW precedence is absolute and cannot be loosened by this file or by `.vscode/settings.json`.
-2. Read `.agents/AGENT_REGISTRY.md` and claim `CLD-01` (Deep Refactorer/Logic Lead) or `CLD-02` (QA Validator/Verification Lead). `AGENTS.md` at root is a stub pointing here — this file is canonical.
+1. **Read `.agents/ORIENTATION.md` first.** It is the single dense entry point —
+   what this repo is, what's authoritative vs. historical, which decisions are
+   settled, and how to work here. Reading it prevents rediscovering the
+   workspace from scratch every session.
+2. Claim `CLD-01` (Deep Refactorer/Logic Lead) or `CLD-02` (QA Validator/Verification Lead) — one, not both.
 3. Read `.agents/states/_ACTIVE_INDEX.md` and load the latest accepted state binary before touching anything.
-4. Inspect `.state/DECISIONS.md`, `.state/DELTA_LOG.md`, and `.state/EXECUTION_LOG.md` for prior session context.
+4. Check `.state/DECISIONS.md`, `.state/DELTA_LOG.md`, and `.state/EXECUTION_LOG.md` only if you need prior session detail — ORIENTATION.md covers the standing context.
 5. Propose your action plan and halt for `[PENDING OPERATOR APPROVAL]` — do not mutate files on the first turn.
 
 ## Boundaries

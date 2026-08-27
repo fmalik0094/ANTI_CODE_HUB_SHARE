@@ -22,6 +22,7 @@ REQUIRED_PATHS = [
     ".state/EXECUTION_LOG.md",
     ".agents/states/_ACTIVE_INDEX.md",
     ".agents/AGENT_REGISTRY.md",
+    ".agents/ORIENTATION.md",
     ".gitignore",
 ]
 
