@@ -145,29 +145,40 @@ Unlike `.geminiignore` and `.aiexclude`, which are advisory context-window filte
 
 #### SECTION 3: MULTI-AGENT INTERACTION MATRIX & DYNAMIC PATH BOUNDARIES
 
-The architecture orchestrates **6 registered agents** — the rows in `.agents/AGENT_REGISTRY.md`, which is canonical (`AGENTS.md` at root is a stub pointing to it, not a second source). Each agent is strictly confined to specific workspace directory nodes.
+The architecture runs **3 permanent agents** — one per engine — plus one
+parametric slot per engine that each project defines for itself. The rows in
+`.agents/AGENT_REGISTRY.md` are canonical (`AGENTS.md` at root is a stub
+pointing to it, not a second source). Each agent is strictly confined to
+specific workspace directory nodes.
 
 ```text
 ===================================================================================================
-AGENT ID   ENGINE        PRIMARY OBJECTIVE                         PATH ACCESS     PRIVILEGE LEVEL
+AGENT ID   ENGINE        PRIMARY OBJECTIVE                         PATH ACCESS       PRIVILEGE LEVEL
 ===================================================================================================
-GEM-01     Antigravity   Macro-Planning, Architecture, Topology     .agents/        Lead Orchestrator
-GEM-02     Antigravity   Sensory / Multimodal Ingestion & Vision    External / API  Ingestion Lead
-CDX-01     VS Code/Codex Fast Scaffolding, Diffs & Terminal Runners src/            Execution Lead
-CDX-02     VS Code/Codex Interactive File Operations & Git Ops     src/, .git      Workspace Operator
-CLD-01     Claude Code   Deep Refactoring, AST Manipulation & Math src/            Logic Lead
-CLD-02     Claude Code   QA Validation, Compliance & Tolerance     validators/     Verification Lead
+PERMANENT — fixed in the hub, inherited by every project
+GEM-01     Antigravity   Macro-Planning, Architecture, Topology    .agents/          Planning Lead
+CDX-01     VS Code/Codex Scaffolding, Diffs, Terminal, Git Ops     src/, .git        Execution Lead
+CLD-01     Claude Code   Deep Refactor, Correctness, QA Validation src/, validators/ Verification Lead
+---------------------------------------------------------------------------------------------------
+PARAMETRIC — one slot per engine, specialization defined per project
+GEM-02     Antigravity   (project-defined)                         (project-defined)
+CDX-02     VS Code/Codex (project-defined)                         (project-defined)
+CLD-02     Claude Code   (project-defined)                         (project-defined)
 ===================================================================================================
 ```
 
+A session claims **one** identity, never two. Slot `02` lets a project add one
+specialist per engine without inventing a parallel identity scheme; the hub
+does not fix what those do. Activating a slot requires a written specialization
+and activation condition in that project's own registry.
+
 The narrative role names below (Architect Core, Harvester, Orchestrator, Deep
-Refactorer, etc.) describe how each of the six IDs actually behaves — they are
-not additional registry rows. Any internal sub-agents an engine spawns to do
-its own job (Claude Task-tool sub-agents, Codex's internal step orchestration)
-stay beneath that engine's single registered ID; they don't get their own row.
-The 13 profile files under `agents/*/A*.md` predate this registry and are
-historical, non-authoritative reference material — see the header note in
-each.
+Refactorer, etc.) describe behavior, not additional registry rows. Internal
+sub-agents an engine spawns for its own work (Claude Task-tool sub-agents,
+Codex's internal step orchestration, Antigravity background subagents) stay
+beneath one registered ID and never get their own row. The 13 profile files
+under `agents/*/A*.md` predate this registry and are historical,
+non-authoritative reference material — see the header note in each.
 
 ##### 1. Antigravity Agent Squad (Sensory Ingest Layer - Monitor 1)
 

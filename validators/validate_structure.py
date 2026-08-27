@@ -85,6 +85,9 @@ def check_permission_paths_real(settings_data):
 
 
 def check_agent_count_agreement():
+    """The registry holds 3 permanent leads (bold IDs) plus 3 parametric slots
+    (backticked IDs, specialization defined per project). main.md must agree on
+    the permanent count and mention every ID."""
     errors = []
     registry_path = ROOT / ".agents" / "AGENT_REGISTRY.md"
     main_path = ROOT / "main.md"
@@ -92,31 +95,51 @@ def check_agent_count_agreement():
         return errors  # already reported by check_required_paths
 
     registry_text = registry_path.read_text(encoding="utf-8")
-    row_ids = re.findall(r"\|\s*\*\*((?:GEM|CDX|CLD)-\d+)\*\*", registry_text)
-    registry_count = len(row_ids)
+    permanent_ids = re.findall(r"\|\s*\*\*((?:GEM|CDX|CLD)-\d+)\*\*", registry_text)
+    slot_ids = re.findall(r"\|\s*`((?:GEM|CDX|CLD)-\d+)`", registry_text)
+
+    if len(permanent_ids) != 3:
+        errors.append(
+            f"AGENT_REGISTRY.md should list exactly 3 permanent leads (one per "
+            f"engine, bold IDs); found {len(permanent_ids)}: "
+            f"{', '.join(permanent_ids) or 'none'}"
+        )
+
+    if len(slot_ids) != 3:
+        errors.append(
+            f"AGENT_REGISTRY.md should list exactly 3 parametric slots (one per "
+            f"engine, backticked IDs); found {len(slot_ids)}: "
+            f"{', '.join(slot_ids) or 'none'}"
+        )
+
+    engines_seen = {pid.split("-")[0] for pid in permanent_ids}
+    for engine in ("GEM", "CDX", "CLD"):
+        if engine not in engines_seen:
+            errors.append(
+                f"AGENT_REGISTRY.md has no permanent lead for engine '{engine}'"
+            )
 
     main_text = main_path.read_text(encoding="utf-8")
-    m = re.search(r"\*\*(\d+)\s+registered agents\*\*", main_text)
+    m = re.search(r"\*\*(\d+)\s+permanent agents\*\*", main_text)
     if not m:
         errors.append(
-            "main.md does not state '**N registered agents**' — cannot "
-            "verify it agrees with .agents/AGENT_REGISTRY.md"
+            "main.md does not state '**N permanent agents**' — cannot verify "
+            "it agrees with .agents/AGENT_REGISTRY.md"
         )
         return errors
 
     stated_count = int(m.group(1))
-    if stated_count != registry_count:
+    if stated_count != len(permanent_ids):
         errors.append(
-            f"Agent count mismatch: AGENT_REGISTRY.md has {registry_count} "
-            f"rows ({', '.join(row_ids)}) but main.md states "
-            f"'{stated_count} registered agents'"
+            f"Agent count mismatch: AGENT_REGISTRY.md lists "
+            f"{len(permanent_ids)} permanent leads "
+            f"({', '.join(permanent_ids)}) but main.md states "
+            f"'{stated_count} permanent agents'"
         )
 
-    for engine_id in row_ids:
-        if engine_id not in main_text:
-            errors.append(
-                f"main.md never mentions registered agent '{engine_id}'"
-            )
+    for agent_id in permanent_ids + slot_ids:
+        if agent_id not in main_text:
+            errors.append(f"main.md never mentions agent '{agent_id}'")
     return errors
 
 

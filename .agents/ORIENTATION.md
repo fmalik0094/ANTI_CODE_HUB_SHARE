@@ -43,28 +43,46 @@ waste tokens here. This table is the arbiter.
 | `.agents/workflows/0*.md` | **Canonical** — session lifecycle |
 | `main.md` | Current, but derived — reflects the above, doesn't override it |
 | `AGENTS.md` (root) | Stub pointing at the registry. Do not put a table back in it |
-| `agents/*/A*.md` (13 files) | **Historical.** Pre-date the 6-agent consolidation. Non-authoritative |
+| `agents/*/A*.md` (13 files) | **Historical.** Pre-date the agent-registry consolidation. Non-authoritative |
 | `FM-NOTES/*.md` | Reference/background. Some pre-dates the tri-engine model |
 
 ---
 
-## 3. The six agents
+## 3. The agents — 3 permanent + 3 parametric
 
-Registered identities. One session claims **one** identity — never two at once.
+One session claims **one** identity. Never two at once.
+
+**Permanent** — fixed here, identical in every project:
 
 | ID | Engine | Owns |
 | :--- | :--- | :--- |
 | `GEM-01` | Antigravity / Gemini | Macro-planning, architecture, topology |
-| `GEM-02` | Antigravity / Gemini | Multimodal ingestion & vision |
-| `CDX-01` | VS Code / Codex | Scaffolding, diffs, terminal runners |
-| `CDX-02` | VS Code / Codex | File operations & git ops |
-| `CLD-01` | Claude Code | Deep refactoring, AST work, math |
-| `CLD-02` | Claude Code | QA validation, compliance, tolerance proofs |
+| `CDX-01` | VS Code / Codex | Scaffolding, diffs, terminal, git ops |
+| `CLD-01` | Claude Code | Deep refactor, correctness review, QA validation |
+
+**Parametric** — one slot per engine, specialization defined by each project,
+not here:
+
+| Slot | Engine |
+| :--- | :--- |
+| `GEM-02` | Antigravity / Gemini |
+| `CDX-02` | VS Code / Codex |
+| `CLD-02` | Claude Code |
+
+A project fills a slot in its own `.agents/AGENT_REGISTRY.md` with a
+specialization *and* an activation condition. An unfilled slot is simply
+unused. Don't activate one without writing both down.
+
+This replaced a fixed 6-agent model in which the hub defined `GEM-02` as
+"Multimodal Ingestion" while `CNC/ROI_Analysis` used the same ID for
+"Financial Evidence Reviewer" — same identity, unrelated jobs, neither one
+wrong. Parametric slots make both correct.
 
 Sub-agents an engine spawns internally (Claude Task-tool sub-agents, Codex's
-internal step orchestration) stay **beneath** one registry row. They do not get
-their own IDs. The registry describes accountable identities, not LLM call
-counts — it should not need editing when a vendor changes internal fan-out.
+internal step orchestration, Antigravity background subagents) stay **beneath**
+one registry row. They do not get their own IDs. This registry describes
+accountable identities, not LLM call counts — it should not need editing when a
+vendor changes internal fan-out.
 
 ---
 
@@ -80,8 +98,10 @@ don't silently act against it.
   was considered and rejected — `anti-code hub/` must stay copyable as one
   clean folder.
 - **Branches are the concurrency control**, not markdown re-reads. See §5.
-- **The agent count is 6.** It was previously stated as 6, 10, and 13 in
-  different files simultaneously. The validator now enforces agreement.
+- **3 permanent agents + 3 parametric slots.** The count was previously stated
+  as 6, 10, and 13 in different files simultaneously, then fixed at 6, then
+  reduced to 3 permanent once it was clear slot `02` needed to vary per
+  project. The validator enforces agreement between the registry and `main.md`.
 - **`.claude/settings.json` is enforced, not advisory.** Unlike
   `.geminiignore`/`.aiexclude` (context filters), its `deny` entries are
   refused at the tool-call layer.
