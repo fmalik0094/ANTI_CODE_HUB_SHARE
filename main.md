@@ -7,7 +7,7 @@
 
 #### SECTION 1: MASTER DIRECTORY TOPOLOGY (THE REPOSITORY SCAFFOLDING)
 
-The absolute file-system framework for the hybrid workspace is deployed at root directory `C:\01_LOCAL_CODING_F.M\00-TEST-ONLY\ANTI_CODE-HUB\`. It isolates planning, building, templates, and documentation into distinct directory panels.
+The absolute file-system framework for the hybrid workspace is deployed at root directory `C:\01_LOCAL_CODING_F.M\ANTI_CODE-HUB\`. It isolates planning, building, templates, and documentation into distinct directory panels.
 
 ```text
 ANTI_CODE-HUB/
@@ -145,24 +145,29 @@ Unlike `.geminiignore` and `.aiexclude`, which are advisory context-window filte
 
 #### SECTION 3: MULTI-AGENT INTERACTION MATRIX & DYNAMIC PATH BOUNDARIES
 
-The architecture orchestrates **10 specialized agents** across distinct runtime sessions. Each agent is strictly confined to specific workspace directory nodes.
+The architecture orchestrates **6 registered agents** — the rows in `.agents/AGENT_REGISTRY.md`, which is canonical (`AGENTS.md` at root is a stub pointing to it, not a second source). Each agent is strictly confined to specific workspace directory nodes.
 
 ```text
 ===================================================================================================
-ROLE                 IDE           PRIMARY OBJECTIVE             PATH ACCESS     PRIVILEGE LEVEL
+AGENT ID   ENGINE        PRIMARY OBJECTIVE                         PATH ACCESS     PRIVILEGE LEVEL
 ===================================================================================================
-1. Architect Core    Antigravity   Session Task Planner          .agents/        Read-Only
-2. Harvester         Antigravity   MCP Data Ingest               External / API  Network Read-Only
-3. Auditor           Antigravity   Cross-Session Token Validator .state/         Read-Only
-4. Reporter          Antigravity   Log & Document Serializer     temp/           Write-Only
-5. Orchestrator      VS Code       Specialist Task Allocator     AGENTS.md       Read-Only
-6. VBA Specialist    VS Code       Single-Module Script Compiler src/vba/        Read/Write
-7. Python Validator  VS Code       AST Analysis Automation Engine src/python/     Read/Write
-8. Shell Specialist  VS Code       PowerShell Task Builder       src/powershell/ Read/Write
-9. Deep Refactorer   Claude Code   Incremental Correctness Passes src/            Read/Write
-10. QA Validator     Claude Code   Delta Review & Defect Reporting validators/    Read/Execute
+GEM-01     Antigravity   Macro-Planning, Architecture, Topology     .agents/        Lead Orchestrator
+GEM-02     Antigravity   Sensory / Multimodal Ingestion & Vision    External / API  Ingestion Lead
+CDX-01     VS Code/Codex Fast Scaffolding, Diffs & Terminal Runners src/            Execution Lead
+CDX-02     VS Code/Codex Interactive File Operations & Git Ops     src/, .git      Workspace Operator
+CLD-01     Claude Code   Deep Refactoring, AST Manipulation & Math src/            Logic Lead
+CLD-02     Claude Code   QA Validation, Compliance & Tolerance     validators/     Verification Lead
 ===================================================================================================
 ```
+
+The narrative role names below (Architect Core, Harvester, Orchestrator, Deep
+Refactorer, etc.) describe how each of the six IDs actually behaves — they are
+not additional registry rows. Any internal sub-agents an engine spawns to do
+its own job (Claude Task-tool sub-agents, Codex's internal step orchestration)
+stay beneath that engine's single registered ID; they don't get their own row.
+The 13 profile files under `agents/*/A*.md` predate this registry and are
+historical, non-authoritative reference material — see the header note in
+each.
 
 ##### 1. Antigravity Agent Squad (Sensory Ingest Layer - Monitor 1)
 
@@ -248,7 +253,7 @@ To operate both environments concurrently without creating version forks or fold
 * **Data Flow:** The **VS Code Orchestrator Agent** ingests `vscode/.codex/config.toml` and reads the target goals from your saved State Binary. **Claude Code** reads `claude/.agents/states/_ACTIVE_INDEX.md` and `claude/.claude/settings.json` for the same purpose.
 * **Workspace Protection:** While you use Antigravity on Monitor 1 to brainstorm structural expansions, you can run terminal scripts in VS Code on Monitor 2, and run deep-refactor/QA passes in Claude Code — all three concurrently, all three reading the same state ledger.
 * **Collision Override:** All three engines access the filesystem in parallel without locking errors. The symmetrical parameters defined in `.geminiignore`, `.vscode/settings.json`, and `claude/.claude/settings.json` prevent background scanners and permission checks from thrashing the same target storage spaces.
-* **Deterministic Assertion:** Code generation cannot be injected into production tracks based on semantic reasoning alone. The VS Code task manager (`tasks.json`) runs local scripts (`validators/validate_formula.py`) to mathematically confirm logic outputs before authorization gates unlock. Claude Code's QA Validator agent runs the same validators before accepting its own refactor passes.
+* **Deterministic Assertion:** Code generation cannot be injected into production tracks based on semantic reasoning alone. The VS Code task manager (`tasks.json`) runs local scripts (`validators/validate_structure.py`, and any domain-specific validator a project adds) to confirm outputs before authorization gates unlock. Claude Code's QA Validator agent runs the same validators before accepting its own refactor passes.
 
 ##### Step 3: Complete Turn Serialization & State Sync
 
@@ -276,8 +281,7 @@ To operate both environments concurrently without creating version forks or fold
 ##### 3. Local Handle Deadlocks (`explorer.exe` Folder Lockout)
 
 * *Cause:* Windows MUP handles refuse to drop file locks over network mappings (`\\swfs01-mtl\COMPANY\`) when automated sub-agents fire high-frequency update loops.
-* *Safe Solution:* Do not execute open command arrays directly on raw strings. Always pass fully qualified network directories wrapped in deep string parameters (`cd "UNC_PATH"`). If a process deadlock occurs, run the native automation terminal script:
-  `Stop-Process -Name explorer -Force; Start-Process explorer`
+* *Safe Solution:* Do not execute open command arrays directly on raw strings. Always pass fully qualified network directories wrapped in deep string parameters (`cd "UNC_PATH"`). If a lock persists, diagnose which process holds the handle (`handle.exe`, `Get-Process` + `Resource Monitor`) and get explicit operator approval before restarting anything — do not force-kill `explorer.exe` as a routine fix; it's disruptive to whatever else is running on the machine and unrelated to normal repository synchronization.
 
 ##### 4. Concurrent State-Binary Collision (Three Writers, One Ledger)
 

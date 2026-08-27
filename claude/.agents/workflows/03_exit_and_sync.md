@@ -1,6 +1,12 @@
 # WORKFLOW: 03_EXIT_AND_SYNC
-1. Before writing, re-read `.agents/states/_ACTIVE_INDEX.md` for a version newer than the one loaded at entry. If Antigravity or VS Code/Codex wrote a newer version during this session, reconcile deltas before proceeding — never blind-overwrite a state binary.
-2. Update `.state/DELTA_LOG.md`.
-3. Execute `python ../validators/validate_structure.py`.
-4. Run state harvester script (`python C:\01_LOCAL_CODING_F.M\TOPIC-HUB-ENGINE\multi_harvester.py`).
-5. Commit changes to Git remote repository if initialized.
+## Branch Discipline (Concurrency Control)
+Work on a dedicated branch per work item (`cld/<item>`), not directly on
+`main`. Antigravity and VS Code/Codex use their own `gem/...`/`cdx/...`
+branches in parallel — this is the real concurrency control; re-reading the
+index before writing is a secondary check, not the primary guard.
+1. Confirm you are on your assigned `cld/...` branch, not `main`.
+2. Re-read `.agents/states/_ACTIVE_INDEX.md` for a version newer than the one loaded at entry; reconcile before writing if one exists — never blind-overwrite a state binary.
+3. Update `.state/DELTA_LOG.md`.
+4. Execute `python ../validators/validate_structure.py`.
+5. Run state harvester script (`python C:\01_LOCAL_CODING_F.M\TOPIC-HUB-ENGINE\multi_harvester.py`).
+6. Push the branch. Merging to `main` and pushing to a remote both require explicit operator approval — neither is implied by validation passing.

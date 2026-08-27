@@ -1,6 +1,9 @@
 # AGENT CORE PROFILE: A4_SHELL_SPECIALIST
 [PLATFORM: VS CODE | CATEGORY: STATEFUL EXECUTION CORE]
 
+> **Status:** Historical — predates the GEM-0X/CDX-0X/CLD-0X consolidation in
+> `.agents/AGENT_REGISTRY.md`. Non-authoritative; kept for reference only.
+
 ---
 
 ## 1. File & Directory Interaction Matrix

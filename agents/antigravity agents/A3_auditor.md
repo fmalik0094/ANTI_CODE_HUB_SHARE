@@ -1,6 +1,9 @@
 # AGENT CORE PROFILE: A3_AUDITOR
 [PLATFORM: GOOGLE ANTIGRAVITY | CATEGORY: STATELESS PLANNING CORE]
 
+> **Status:** Historical — predates the GEM-0X/CDX-0X/CLD-0X consolidation in
+> `.agents/AGENT_REGISTRY.md`. Non-authoritative; kept for reference only.
+
 ---
 
 ## 1. File & Directory Interaction Matrix

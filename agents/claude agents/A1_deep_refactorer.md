@@ -1,6 +1,9 @@
 # AGENT CORE PROFILE: A1_DEEP_REFACTORER
 [PLATFORM: CLAUDE CODE | CATEGORY: STATEFUL EXECUTION CORE — QA LAYER]
 
+> **Elaborates:** `CLD-01` in `.agents/AGENT_REGISTRY.md`. This is detail
+> beneath that registry row, not a second identity.
+
 ---
 
 ## 1. File & Directory Interaction Matrix

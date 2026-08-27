@@ -1,6 +1,9 @@
 # AGENT CORE PROFILE: A2_QA_VALIDATOR
 [PLATFORM: CLAUDE CODE | CATEGORY: STATEFUL EXECUTION CORE — QA LAYER]
 
+> **Elaborates:** `CLD-02` in `.agents/AGENT_REGISTRY.md`. This is detail
+> beneath that registry row, not a second identity.
+
 ---
 
 ## 1. File & Directory Interaction Matrix

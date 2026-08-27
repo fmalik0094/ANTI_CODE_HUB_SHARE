@@ -1,6 +1,9 @@
 # AGENT CORE PROFILE: A3_WORK_IQ_INTEGRATOR
 [PLATFORM: DUAL-IDE HYBRID | CATEGORY: ANTI-CODE HUB AGENTS]
 
+> **Status:** Historical — predates the GEM-0X/CDX-0X/CLD-0X consolidation in
+> `.agents/AGENT_REGISTRY.md`. Non-authoritative; kept for reference only.
+
 ---
 
 ## 1. File & Directory Interaction Matrix

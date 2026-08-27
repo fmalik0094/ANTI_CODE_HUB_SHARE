@@ -20,6 +20,5 @@
         "**/.venv/**": true,
         "**/__pycache__/**": true
     },
-    "editor.formatOnSave": true,
-    "chat.permissions.default": "autopilot"
+    "editor.formatOnSave": true
 }
