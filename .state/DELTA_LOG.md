@@ -2,3 +2,4 @@
 - Initialized Anti-Code Hub governance remediation.
 - 2026-08-27: Added a compact, on-demand tri-vendor API model reference under `.agents/resources/`; linked it from the canonical global rules, added source-contract validation, and reserved Git-ignored `docs-cache/` for optional targeted offline snapshots.
 - 2026-08-27: Extended the model reference with official tool-documentation entry points, manufacturer-only terminology, temporary-pricing annotations, Claude model-ID evidence, and current Antigravity CLI status; added non-blocking 60-day staleness warnings.
+- 2026-08-28: Rewrote `main.md` from the live repository topology and canonical 3-permanent-plus-3-parametric contract; removed false squad, automatic-validation, optimistic-concurrency, hard-filter, and Codex-command-enforcement claims; deleted three obsolete seed `.gitkeep` placeholders beside real files.

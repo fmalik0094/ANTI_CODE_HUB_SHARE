@@ -2,323 +2,332 @@
 
 ================================================================================
           UNIFIED AGENT WORKSPACE CONTRACT (UAWC 1.0) - REPOSITORY SPEC
-                      DYNAMIC PATH & MULTI-AGENT ORCHESTRATION
+                     TRI-ENGINE GOVERNANCE AND EXECUTION
 ================================================================================
 
-#### SECTION 1: MASTER DIRECTORY TOPOLOGY (THE REPOSITORY SCAFFOLDING)
+#### SECTION 1: MASTER DIRECTORY TOPOLOGY
 
-The absolute file-system framework for the hybrid workspace is deployed at root directory `C:\01_LOCAL_CODING_F.M\ANTI_CODE-HUB\`. It isolates planning, building, templates, and documentation into distinct directory panels.
+`ANTI_CODE-HUB` is a rulebook and project seed, not an application. The tracked
+topology below was regenerated from the directory listing on 2026-08-28. Local
+untracked files and `.git/` internals are intentionally omitted.
 
 ```text
 ANTI_CODE-HUB/
-├── FM-NOTES/                         # Consolidated Documentation & Field Manuals
-│   ├── 00-antigravity-state_manager_field_manual.md
-│   ├── 00-vscode-execution_core_field_manual.md
-│   ├── 00-anticode-dual_ide_co_processing_manual.md
-│   ├── 00.00-LEXICON.md              # Symmetrical Lexicon & Definitions
-│   ├── 01_sidebyside comparaision_anti-vs.md
-│   └── base_workspace_template.md    # [NEW] CWI/CNC Compliant Base Workspace Template
-├── antigravity/                      # Stateless Planning Workspace Panel
-│   ├── .agents/                      # Shared System Lifecycles & Rules
+├── .agents/                              # Canonical hub contract
+│   ├── AGENT_REGISTRY.md                 # 3 permanent leads + 3 parametric slots
+│   ├── ORIENTATION.md                    # Single entry point
+│   ├── resources/MODEL_REFERENCE.md      # On-demand vendor reference
+│   ├── rules/global.md                   # DENY > ASK > ALLOW baseline
+│   ├── states/                           # Hub checkpoint and active index
+│   └── workflows/                        # Genesis, entry, exit/sync
+├── .claude/settings.json                 # Enforced Claude Code permissions
+├── .state/                               # Hub decisions, deltas, execution evidence
+├── .vscode/settings.json                 # Root editor search/watcher exclusions
+├── agents/                               # 13 historical, non-authoritative profiles
+├── anti-code hub/                        # Copyable tri-engine project seed
+│   ├── .agents/
+│   │   ├── AGENT_REGISTRY.md
+│   │   ├── ORIENTATION.md
 │   │   ├── rules/
-│   │   │   ├── global.md             # Baseline Precedence (DENY > ASK > ALLOW)
-│   │   │   └── base_workspace_template.md # [NEW] Symmetrical Base Template
-│   │   ├── workflows/                # Genesis, Entry, and Exit checklists
-│   │   └── states/                   # Snapshot Vault & Active Domain Ledger
-│   ├── .gemini/GEMINI.md             # Non-Conversational Meta-Rules
-│   ├── .geminiignore                 # Context Buffer Ingestion Exclude list
-│   ├── AGENTS.md                     # Antigravity Squad Definition Matrix
-│   └── hub_manager.py                # [NEW] Local python CLI utility for pruning/merging
-├── vscode/                           # Stateful Execution Workspace Panel
-│   ├── .vscode/                      # IDE launch profiles, settings & tasks
-│   ├── .codex/                       # Session limit & command blocklist configurations
-│   ├── .state/                       # Split Delta Ledger tracks (BASELINE, DELTA_LOG, etc.)
-│   ├── validators/                   # Python validation checkers
-│   └── src/                          # Production Codebase targets (/vba, /python, etc.)
-├── claude/                           # [NEW] Stateful QA / Deep-Refactor Workspace Panel
-│   ├── .claude/settings.json         # permissions.allow/ask/deny — enforced, not aspirational
-│   ├── .agents/                      # Symmetrical copy of planning controls
-│   │   ├── rules/global.md
-│   │   ├── workflows/                # Genesis, Entry, and Exit checklists
-│   │   └── states/                   # Snapshot Vault & Active Domain Ledger
-│   ├── .state/                       # Split Delta Ledger tracks (BASELINE, DELTA_LOG, etc.)
-│   ├── CLAUDE.md                     # Auto-loaded identity, boot sequence & boundaries
-│   ├── AGENTS.md                     # Claude Code Agent Contract
-│   ├── src/                          # Refactor/QA target (Production Codebase)
-│   └── outputs/                      # Derived output root
-├── anti-code hub/                    # Integrated Tri-Engine Co-Processing Template
-│   ├── .agents/                      # Symmetrical copy of planning controls
-│   │   ├── rules/
-│   │   │   ├── global.md             # Baseline Precedence
-│   │   │   └── base_workspace_template.md # [NEW] Symmetrical Base Template
-│   │   ├── workflows/
-│   │   └── states/
-│   ├── .codex/                       # Symmetrical copy of execution controls
-│   ├── .claude/settings.json         # [NEW] Symmetrical copy of Claude permission controls
-│   ├── .state/                       # Symmetrical copy of delta ledger tracks
-│   ├── .vscode/                      # Shared editor options
-│   ├── validators/                   # Unified validator execution files
-│   ├── src/                          # Production codebase files
-│   ├── AGENTS.md                     # Integrated agent definitions
-│   ├── CLAUDE.md                     # [NEW] Claude Code auto-loaded identity & boot sequence
-│   └── hub_manager.py                # [NEW] Local python CLI utility for pruning/merging
-├── main.md                           # Master Co-Processing Entrypoint Manual
-├── .geminiignore                     # Root Ingestion Filter
-├── .aiexclude                        # MCP Hard File System Blocklist
-└── .gitignore                        # Git Source Control Exclusion Ledger
+│   │   ├── states/
+│   │   └── workflows/
+│   ├── .claude/settings.json
+│   ├── .codex/instructions.md
+│   ├── .gemini/GEMINI.md
+│   ├── .state/                           # Initialized project journals
+│   ├── .vscode/settings.json
+│   ├── docs/
+│   ├── outputs/
+│   ├── src/
+│   ├── tests/
+│   ├── validators/validate_structure.py  # Project-neutral validator
+│   ├── .aiexclude
+│   ├── .geminiignore
+│   ├── .gitignore
+│   ├── AGENTS.md
+│   ├── CLAUDE.md
+│   └── hub_manager.py
+├── antigravity/                          # Antigravity staging zone
+│   ├── .agents/
+│   ├── .gemini/GEMINI.md
+│   └── AGENTS.md
+├── claude/                               # Claude Code staging zone
+│   ├── .agents/
+│   ├── .claude/settings.json
+│   ├── .state/
+│   ├── outputs/
+│   ├── src/
+│   ├── AGENTS.md
+│   └── CLAUDE.md
+├── vscode/                               # VS Code/Codex staging zone
+│   ├── .codex/
+│   ├── .state/
+│   ├── .vscode/
+│   ├── src/
+│   └── validators/
+├── FM-NOTES/                             # Historical and reference manuals
+├── validators/validate_structure.py      # Hub structural/semantic validator
+├── .aiexclude                            # Codex context filter
+├── .geminiignore                         # Gemini context filter
+├── .gitignore                            # Git exclusions
+├── AGENTS.md                             # Registry stub for Codex discovery
+├── CLAUDE.md                             # Root Claude Code entry file
+└── main.md                               # This derived manual
 ```
+
+The seed now contains the orientation, registry, engine entry/configuration
+files, filters, state journals, and project-neutral validator listed above.
+The `antigravity/` and `claude/` zones contain no capability or path class
+absent from the seed; they remain staging copies until their proven
+configuration is folded into the seed and the zones can be deleted.
+
+The VS Code zone has three unique operational files still awaiting that
+decision: `vscode/.codex/config.toml`, `vscode/.vscode/tasks.json`, and
+`vscode/validators/validate_config.py`. Its other files are staging mirrors or
+legacy zone state. In particular, `vscode/.state/BASELINE_HASH.md` is not a
+fourth engine capability and should not be promoted as one.
 
 ---
 
-#### SECTION 2: DUAL-IDE FILTRATION MATRIX (LOOP REVERSAL PREVENTION)
+#### SECTION 2: CONTEXT FILTRATION AND REAL ENFORCEMENT BOUNDARIES
 
-To block background indexing loops from locking files on disk or causing file-watcher racing, directory boundary paths must be excluded symmetrically in settings.
+The repository uses three different mechanisms. They are not interchangeable.
 
-##### 1. VS Code Settings Blueprint (`vscode/.vscode/settings.json`)
+##### 1. Context and indexing filters
 
-```json
-{
-  "search.exclude": {
-    "**/logs": true,
-    "**/temp": true,
-    "**/*.csv": true,
-    "**/*.xlsm": true,
-    "**/*.pdf": true,
-    "**/.state": true,
-    "**/.agents/states": true
-  },
-  "files.watcherExclude": {
-    "**/logs/**": true,
-    "**/temp/**": true,
-    "**/.state/**": true,
-    "**/.agents/states/**": true
-  },
-  "editor.formatOnSave": true
-}
-```
+- `.geminiignore` and `anti-code hub/.geminiignore` reduce files considered for
+  Gemini context ingestion.
+- `.aiexclude` and `anti-code hub/.aiexclude` reduce files presented to Codex
+  context.
+- `.vscode/settings.json` and `anti-code hub/.vscode/settings.json` reduce VS
+  Code search and file-watcher activity for state, logs, temporary files, and
+  heavy artifacts.
 
-##### 2. Antigravity Ingestion Exclusion Blueprint (`antigravity/.geminiignore`)
+These are context and editor-performance filters. They do not deny direct file
+access, authorize commands, or form a security boundary. Sensitive material
+must still stay out of the repository and be protected by the operating system
+and the tool's actual permission layer.
+
+##### 2. Claude Code permissions
+
+`.claude/settings.json` is the real repository-level Claude Code permission
+surface for work on the hub. Its `allow`, `ask`, and `deny` lists are enforced
+at Claude Code's tool-call layer. It requires approval for named Git,
+destructive, elevated, download, and web-fetch operations and denies the named
+system, parent, credential, key, and environment-file paths.
+
+`anti-code hub/.claude/settings.json` provides the project-neutral equivalent
+for a newly seeded project. `claude/.claude/settings.json` remains a staging
+variant. A permission claim is valid only when the Claude session is governed
+by the applicable file.
+
+##### 3. Codex configuration status
+
+`vscode/.codex/config.toml` currently contains staging keys for orchestration,
+token management, terminal review, and a command list. Those keys are not in
+OpenAI's documented Codex configuration reference, so this file must not be
+described as enforcing them. The repository currently has no supported Codex
+`config.toml` command deny list for `rm`, `sudo`, `curl`, or `wget`.
+
+Codex safety therefore comes from the active host sandbox, approval policy,
+operator instructions, and canonical workspace rules—not from the custom keys
+in `vscode/.codex/config.toml`. Supported project configuration must be checked
+against <https://developers.openai.com/codex/config-reference> before the VS
+Code staging file is folded into the seed.
+
+##### 4. Validator invocation
+
+`python validators/validate_structure.py` is the hub quality gate. It runs when
+an operator or agent invokes it. `vscode/.vscode/tasks.json` exposes manual VS
+Code tasks, but no repository file runs the validator automatically on save and
+validation does not unlock authorization gates.
+
+---
+
+#### SECTION 3: MULTI-AGENT INTERACTION MATRIX
+
+The architecture runs **3 permanent agents**, one per engine, plus one
+parametric slot per engine. `.agents/AGENT_REGISTRY.md` is canonical;
+`AGENTS.md` is a discovery stub and does not duplicate the table.
 
 ```text
-# EXCLUSION MATRIX: ANTIGRAVITY CONTEXT WINDOW PROTECTION
-logs/
-temp/
-output/
-artifacts/
-*.csv
-*.xlsm
-*.xlsx
-*.pptx
-*.pdf
-.state/
-.agents/states/
-.vscode/
-.codex/
+================================================================================
+AGENT ID   ENGINE                 RESPONSIBILITY
+================================================================================
+PERMANENT — fixed in the hub and inherited by every project
+GEM-01     Antigravity / Gemini   Macro-planning, architecture, topology
+CDX-01     VS Code / Codex        Scaffolding, diffs, terminal, Git operations
+CLD-01     Claude Code            Deep refactor, correctness review, QA validation
+--------------------------------------------------------------------------------
+PARAMETRIC — specialization and activation condition defined by each project
+GEM-02     Antigravity / Gemini   Project-defined or unused
+CDX-02     VS Code / Codex        Project-defined or unused
+CLD-02     Claude Code            Project-defined or unused
+================================================================================
 ```
 
-##### 3. Security Boundary Blueprint (`.aiexclude`)
+A session claims one identity, never two. The hub does not assign a
+specialization to any slot `02`. Before a project activates one, its own
+`.agents/AGENT_REGISTRY.md` must state both the specialization and the upstream
+condition that activates it.
+
+Internal sub-agents remain beneath the registered identity that spawned them;
+they do not create additional registry rows. The profiles beneath `agents/`
+are historical reference material, not live squads, path permissions, or
+additional identities.
+
+The three permanent leads describe accountable ownership, not a rigid queue.
+Planning, implementation, and verification may overlap when each work item is
+isolated on its engine branch and handoffs are explicit.
+
+---
+
+#### SECTION 4: TRI-ENGINE LIFECYCLE
+
+Every engine session starts at `.agents/ORIENTATION.md`. The engine instruction
+surfaces `antigravity/.gemini/GEMINI.md`, `vscode/.codex/instructions.md`, and
+`CLAUDE.md` all route sessions to that canonical entry point.
 
 ```text
-# CRYPTOGRAPHIC & PRIVACY HARD BLOCKLIST - INTERCEPTED AT FS LAYER
-**/*.secret
-**/*.key
-**/*.pem
-credentials/
-config/private/
+[BOOT]                         [WORK]                         [EXIT]
+1. Read ORIENTATION.md        1. Stay on assigned branch    1. Record deltas/evidence
+2. Claim one identity         2. Make approved changes      2. Run the validator manually
+3. Read relevant decisions   3. Keep scope engine-owned    3. Re-read shared state index
+4. Create engine branch      4. Verify proportionally      4. Commit only if authorized
+5. Obtain approval                                           5. Do not merge or push silently
 ```
 
-##### 4. Claude Code Permission Blueprint (`claude/.claude/settings.json`)
+##### Planning
 
-Unlike `.geminiignore` and `.aiexclude`, which are advisory context-window filters, this file is enforced by the Claude Code CLI itself — DENY entries are not just skipped from context, they are refused as tool calls.
+`GEM-01` owns architecture, topology, and high-level sequencing. Planning
+artifacts become explicit handoff inputs; they do not authorize another engine
+to mutate files, commit, merge, or push.
 
-```json
-{
-  "permissions": {
-    "allow": ["Read(.agents/**)", "Write(src/**)", "Write(outputs/**)", "Write(.agents/states/**)"],
-    "ask":   ["Bash(rm:*)", "Bash(git push --force:*)", "Bash(sudo:*)", "WebFetch"],
-    "deny":  ["Write(C:/Windows/**)", "Write(../**)", "Read(**/*.key)", "Read(.env)"]
-  }
-}
-```
+##### Construction
+
+`CDX-01` owns scaffolding, file changes, diffs, terminal execution, and Git
+operations. It runs relevant validators after changes. VS Code tasks are
+convenience launchers only; they are neither automatic nor approval gates.
+
+##### Verification
+
+`CLD-01` owns deep correctness review, refactoring, and QA validation. The
+applicable `.claude/settings.json` constrains Claude Code tool calls, but a
+successful validation still does not authorize a commit or any later Git
+operation.
+
+##### Exit and synchronization
+
+`.agents/workflows/03_exit_and_sync.md` is the canonical exit procedure.
+Work occurs on `gem/<item>`, `cdx/<item>`, or `cld/<item>`, never directly on
+`main`. Re-reading `.agents/states/_ACTIVE_INDEX.md` before a state write remains
+a useful stale-state check, but it is secondary to branch isolation and is not
+a lock.
+
+Validation, commit, merge, and push are separate gates. Permission for one does
+not imply permission for the next.
 
 ---
 
-#### SECTION 3: MULTI-AGENT INTERACTION MATRIX & DYNAMIC PATH BOUNDARIES
+#### SECTION 5: SYSTEMIC FAILURE MODES AND SAFEGUARDS
 
-The architecture runs **3 permanent agents** — one per engine — plus one
-parametric slot per engine that each project defines for itself. The rows in
-`.agents/AGENT_REGISTRY.md` are canonical (`AGENTS.md` at root is a stub
-pointing to it, not a second source). Each agent is strictly confined to
-specific workspace directory nodes.
+##### 1. Watcher and context churn
 
-```text
-===================================================================================================
-AGENT ID   ENGINE        PRIMARY OBJECTIVE                         PATH ACCESS       PRIVILEGE LEVEL
-===================================================================================================
-PERMANENT — fixed in the hub, inherited by every project
-GEM-01     Antigravity   Macro-Planning, Architecture, Topology    .agents/          Planning Lead
-CDX-01     VS Code/Codex Scaffolding, Diffs, Terminal, Git Ops     src/, .git        Execution Lead
-CLD-01     Claude Code   Deep Refactor, Correctness, QA Validation src/, validators/ Verification Lead
----------------------------------------------------------------------------------------------------
-PARAMETRIC — one slot per engine, specialization defined per project
-GEM-02     Antigravity   (project-defined)                         (project-defined)
-CDX-02     VS Code/Codex (project-defined)                         (project-defined)
-CLD-02     Claude Code   (project-defined)                         (project-defined)
-===================================================================================================
-```
+*Cause:* Heavy artifacts, transient output, and state history entering editor
+indexes or model context increase disk activity and consume context without
+improving the task.
 
-A session claims **one** identity, never two. Slot `02` lets a project add one
-specialist per engine without inventing a parallel identity scheme; the hub
-does not fix what those do. Activating a slot requires a written specialization
-and activation condition in that project's own registry.
+*Safeguard:* Maintain the patterns in `.geminiignore`, `.aiexclude`, and
+`.vscode/settings.json`. Treat them as performance/context controls, not access
+denials. No automatic build runner or on-save validator is configured here.
 
-The narrative role names below (Architect Core, Harvester, Orchestrator, Deep
-Refactorer, etc.) describe behavior, not additional registry rows. Internal
-sub-agents an engine spawns for its own work (Claude Task-tool sub-agents,
-Codex's internal step orchestration, Antigravity background subagents) stay
-beneath one registered ID and never get their own row. The 13 profile files
-under `agents/*/A*.md` predate this registry and are historical,
-non-authoritative reference material — see the header note in each.
+##### 2. Semantic data inflation
 
-##### 1. Antigravity Agent Squad (Sensory Ingest Layer - Monitor 1)
+*Cause:* Loading raw tables, CAD assets, archives, or long telemetry into a
+general reasoning session crowds out the contract and current work item.
 
-* **Architect Core:**
-  * *Task:* Ingests high-level customer blueprints and outputs modular system change vectors.
-  * *Path Interaction:* Scans `antigravity/.agents/rules/` and `antigravity/.agents/skills/` to prioritize execution rules before planning code shifts.
-  * *Dynamic Flow Rule:* Prohibited from touching `/src/` directories directly. It writes the planned schema change vector exclusively to the `.state/` staging vault.
+*Safeguard:* Load `.agents/resources/MODEL_REFERENCE.md` only for model/API
+work, keep large formats behind the existing context filters, and use focused
+local scripts beneath `validators/` when deterministic inspection is needed.
 
-* **Harvester:**
-  * *Task:* Queries authorized Model Context Protocol (MCP) data streams (e.g., live stock tables, network paths).
-  * *Path Interaction:* Sandboxed outside the physical workspace directory structure. Reads remote inputs or server endpoints.
-  * *Dynamic Flow Rule:* Zero local directory write privileges. It streams collected payloads straight to the `temp/raw_payloads/` directory.
+##### 3. Windows file-handle contention
 
-* **Auditor:**
-  * *Task:* Performs cross-session verification passes to guard against logic drift and token degradation.
-  * *Path Interaction:* Targets `.state/BASELINE_HASH.md` and `.state/DECISIONS.md`.
-  * *Dynamic Flow Rule:* Monitors historical project boundaries, stopping the active execution pipeline if an unauthorized framework rewrite is detected.
+*Cause:* Editors, indexers, and external applications can retain handles on
+local or network files while another engine attempts a write.
 
-* **Reporter:**
-  * *Task:* Flushes active conversation history and serializes context changes down to plain text.
-  * *Path Interaction:* Appends and overwrites files inside `.state/DELTA_LOG.md` and `antigravity/.agents/states/_ACTIVE_INDEX.md`.
-  * *Dynamic Flow Rule:* Operates at the end of each turn, turning temporary workspace memory into disk persistence blocks.
+*Safeguard:* Identify the process holding the file, close or pause the owning
+application when safe, and obtain operator approval before terminating a
+process. Context filters reduce scanning pressure but do not release file
+handles or guarantee the absence of contention.
 
-##### 2. VS Code Codex Agent Squad (Stateful Construction Layer - Monitor 2)
+##### 4. Concurrent state collision
 
-* **Orchestrator:**
-  * *Task:* Parses local editor commands triggered via `.vscode/tasks.json` or inline shortcuts.
-  * *Path Interaction:* Evaluates `AGENTS.md` and `.codex/config.toml`.
-  * *Dynamic Flow Rule:* Coordinates multi-file refactoring runs by delegating explicit, localized strings to language specialists.
+*Cause:* Multiple engines writing the same state or governance file on `main`
+can silently overwrite one another.
 
-* **VBA Specialist:**
-  * *Task:* Builds production macros, applying late-binding compile-first architecture constraints.
-  * *Path Interaction:* Confined to directory path `src/vba/`.
-  * *Dynamic Flow Rule:* Prohibited from accessing system-level PowerShell scripts or external network modules.
+*Safeguard:* Use one branch per engine per work item as required by
+`.agents/workflows/03_exit_and_sync.md`. Git then exposes the collision as a
+merge conflict. Re-read `_ACTIVE_INDEX.md` before a state write as a secondary
+freshness check, reconcile any newer state, and never treat that read as the
+primary concurrency mechanism.
 
-* **Python Validator:**
-  * *Task:* Compiles internal analysis tools and maintains script file typings.
-  * *Path Interaction:* Confined to directory path `src/python/` and `validators/`.
-  * *Dynamic Flow Rule:* Automatically executes `validators/validate_structure.py` on-save to protect against code-breaking modifications.
+##### 5. Configuration-as-security illusion
 
-* **Shell Specialist:**
-  * *Task:* Builds path-hardened local file manipulation scripts and handles local drive configurations.
-  * *Path Interaction:* Confined to directory path `src/powershell/`.
-  * *Dynamic Flow Rule:* Command primitives are filtered against a hardcoded blocklist (`rm`, `sudo`, `wget`, `curl`) managed inside `.codex/config.toml`.
+*Cause:* A comment, ignore pattern, or undocumented config key can look like a
+hard gate even when no tool enforces it.
 
-##### 3. Claude Code Agent Squad (Deep-Refactor / QA Layer — Concurrent With Monitor 2)
-
-* **Deep Refactorer:**
-  * *Task:* Performs strict, incremental refactoring and correctness validation on code Antigravity has scaffolded and Codex has built. Does not invent new architecture and does not run terminal orchestration.
-  * *Path Interaction:* Confined to `src/` and `outputs/`, enforced by `claude/.claude/settings.json` rather than advisory ignore files.
-  * *Dynamic Flow Rule:* Halts on `[PENDING OPERATOR APPROVAL]` before its first mutation each session, same as every other engine's entry protocol.
-
-* **QA Validator:**
-  * *Task:* Diffs the current `src/` state against the last accepted state binary, runs `validators/`, and reports defects as concrete failure scenarios.
-  * *Path Interaction:* Read-only on `src/`; writes only to `.state/DELTA_LOG.md`.
-  * *Dynamic Flow Rule:* Never modifies code directly from a QA pass — findings require an explicit separate approval before the Deep Refactorer (or another engine) acts on them.
-
-Claude Code runs concurrently with Antigravity and VS Code on the same filesystem, not sequentially after them — it is a third live session, not a batch step. Because all three engines can now write `.agents/states/` inside the same window, `03_exit_and_sync.md` enforces an optimistic version-check (re-read `_ACTIVE_INDEX.md` for a version newer than the one loaded at boot) before any of them commits a state binary. See Section 5.4.
+*Safeguard:* Tie every enforcement claim to an actual mechanism. In this
+repository, Claude Code permissions are enforced by `.claude/settings.json`.
+Gemini and Codex ignore files filter context. The custom policies currently in
+`vscode/.codex/config.toml` are not an enforced Codex command gate.
 
 ---
 
-#### SECTION 4: THE INTEGRATED TRIPLE-STAGE LIFECYCLE (THE RUNTIME HANDSHAKE)
+#### SECTION 6: ARCHITECTURAL LESSONS AND PENDING CONSOLIDATION
 
-To operate both environments concurrently without creating version forks or folder-locking issues, execute this systematic runtime lifecycle:
+##### 1. Orientation and state
 
-```text
-[STAGE 1: PLAN (Antigravity)]           [STAGE 2: BUILD (VS Code + Claude Code)]  [STAGE 3: REAP (Tri-Engine Sync)]
-1. Run Genesis Prompt Compiler.  ───>   1. Open Local Workspace.     ───>   1. Trigger Exit Prompt Node.
-2. Formulate Modular Blueprint.         2. Execute Specialist Run.          2. Run Python Schema Checks.
-3. Lock Core Decision Variables.        3. Mutate Code inside /src/.        3. Flush Active Chat Cache.
-4. Export Target State Binary.          4. Execute Local Validators.        4. Append Ledger Record Row.
-```
+`.agents/ORIENTATION.md` is the dense current contract. State journals preserve
+decisions and execution evidence, but historical state never overrides the
+orientation, registry, global rules, or workflows.
 
-##### Step 1: High-Level Planning & Genesis Inception
+##### 2. Localized governance
 
-* **Action:** Open your clean Google Antigravity/Gemini environment window on Monitor 1. Paste the `antigravity/.agents/workflows/01_genesis_prompt.md` block into the terminal, wrapping your raw project idea underneath.
-* **Data Flow:** The **Antigravity Architect Agent** processes the parameters, bypasses conversational text summaries, and generates a standalone `[DOMAIN]_V1.0.md` State Binary block.
-* **Path Storage:** Save this file block physically to your drive path under `antigravity/.agents/states/[DOMAIN]_V1.0.md`.
+Project configuration must be generated from paths and capabilities that
+actually exist in that project. Governance files must not be hand-copied
+between repositories. Context filtering, permission enforcement, and human
+approval are separate layers and must be documented separately.
 
-##### Step 2: The Tri-Engine Execution & Validation Cycle
+##### 3. Validation
 
-* **Action:** Launch standard VS Code on Monitor 2, targeted at the exact same workspace root directory. Optionally, launch a Claude Code CLI session (Monitor 3, or a terminal pane inside Monitor 2) rooted at `claude/` — it auto-loads `claude/CLAUDE.md` on start the same way Codex reads `.codex/config.toml`.
-* **Data Flow:** The **VS Code Orchestrator Agent** ingests `vscode/.codex/config.toml` and reads the target goals from your saved State Binary. **Claude Code** reads `claude/.agents/states/_ACTIVE_INDEX.md` and `claude/.claude/settings.json` for the same purpose.
-* **Workspace Protection:** While you use Antigravity on Monitor 1 to brainstorm structural expansions, you can run terminal scripts in VS Code on Monitor 2, and run deep-refactor/QA passes in Claude Code — all three concurrently, all three reading the same state ledger.
-* **Collision Override:** All three engines access the filesystem in parallel without locking errors. The symmetrical parameters defined in `.geminiignore`, `.vscode/settings.json`, and `claude/.claude/settings.json` prevent background scanners and permission checks from thrashing the same target storage spaces.
-* **Deterministic Assertion:** Code generation cannot be injected into production tracks based on semantic reasoning alone. The VS Code task manager (`tasks.json`) runs local scripts (`validators/validate_structure.py`, and any domain-specific validator a project adds) to confirm outputs before authorization gates unlock. Claude Code's QA Validator agent runs the same validators before accepting its own refactor passes.
+The root validator checks this hub. The seed's
+`anti-code hub/validators/validate_structure.py` is project-neutral and checks
+the inherited contract after the seed is copied. Both are manually invoked;
+neither proves application correctness or authorizes Git operations.
 
-##### Step 3: Complete Turn Serialization & State Sync
+##### 4. State utility status
 
-* **Action:** When pausing or halting development, paste the contents of `antigravity/.agents/workflows/03_exit_and_sync.md` into your active communication channels (Gemini side), and let Claude Code and Codex run their own local `03_exit_and_sync.md` copies (`claude/.agents/workflows/`) before closing their sessions.
-* **Data Flow:** The **Antigravity Reporter Agent** stops active trajectories and generates exactly two distinct output text arrays:
-  1. *Block 1 (The Incremental State Binary):* Carries the updated cumulative decision ledger and session deltas. Overwrite your local `antigravity/.agents/states/[DOMAIN]_V*.md` file with this target block.
-  2. *Block 2 (The Registry Tracking Row):* A single tabular string documenting your active progress metrics.
-* **Concurrent-Write Guard:** Because up to three engines can write `.agents/states/` in the same window, each engine's exit workflow re-reads `_ACTIVE_INDEX.md` for a version newer than the one it loaded at entry before writing its own — never a blind overwrite.
-* **Path Storage:** Open `antigravity/.agents/states/_ACTIVE_INDEX.md` in your local editor and append the Block 2 row to the bottom of the ledger file. Close your active conversations safely; your entire technical timeline is stored in plain text on your local disk, ready for immediate ingestion during the next session turn.
+`anti-code hub/hub_manager.py` exists, but its `bundle` and `parse`
+commands are not implemented. It is not a required lifecycle component and
+must not be described as automatic context bundling. Its state-pruning behavior
+should be treated as experimental until separately tested and accepted.
 
----
+The seed's global rules also contain an on-demand model-reference instruction,
+but no seed-local model-resource file is tracked. That packaging gap is outside
+this manual-only correction pass and must not be mistaken for a working local
+resource.
 
-#### SECTION 5: SYSTEMIC FAILURE MODES & OPERATIONAL SAFEGUARDS
+##### 5. Zone consolidation
 
-##### 1. Watcher State Racing (Infinite Disk-Write Loops)
+The current settled plan is staged consolidation, not immediate deletion:
 
-* *Cause:* Mismatched workspace ignore files. If Antigravity generates a state binary and VS Code's indexing daemon tracks it as a change event, it triggers an automated build runner, creating an infinite background loop that thrashes disk I/O.
-* *Safe Solution:* The workspace synchronization settings are locked. Never remove `.state/`, `antigravity/.agents/states/`, or `claude/.agents/states/` from `.geminiignore`, `.aiexclude`, `.vscode/settings.json`, or `claude/.claude/settings.json`.
+1. Verify an engine-specific configuration in its zone.
+2. Adapt the proven configuration to the project-neutral seed.
+3. Validate the seed.
+4. Delete the redundant zone only in a separately approved pass.
 
-##### 2. Semantic Data Inflation (Context Blending)
-
-* *Cause:* Passing raw database arrays or massive manufacturing CSV assets straight into general reasoning windows, causing immediate context window degradation.
-* *Safe Solution:* The platform enforces a **Strict Ingestion Guardrail**. Broad LLM layers read configuration maps, JSON typing schemas, and short decision blocks. Heavy processing data files are handled locally within isolated execution sandboxes (`validators/`).
-
-##### 3. Local Handle Deadlocks (`explorer.exe` Folder Lockout)
-
-* *Cause:* Windows MUP handles refuse to drop file locks over network mappings (`\\swfs01-mtl\COMPANY\`) when automated sub-agents fire high-frequency update loops.
-* *Safe Solution:* Do not execute open command arrays directly on raw strings. Always pass fully qualified network directories wrapped in deep string parameters (`cd "UNC_PATH"`). If a lock persists, diagnose which process holds the handle (`handle.exe`, `Get-Process` + `Resource Monitor`) and get explicit operator approval before restarting anything — do not force-kill `explorer.exe` as a routine fix; it's disruptive to whatever else is running on the machine and unrelated to normal repository synchronization.
-
-##### 4. Concurrent State-Binary Collision (Three Writers, One Ledger)
-
-* *Cause:* Adding Claude Code as a third engine means up to three live sessions can append to `.agents/states/_ACTIVE_INDEX.md` or overwrite the same `[DOMAIN]_V*.md` file inside one working window. A blind overwrite from the last engine to exit silently discards another engine's session deltas.
-* *Safe Solution:* Every `03_exit_and_sync.md` (root, `antigravity/`, `anti-code hub/`, `claude/`) opens with an optimistic version-check: re-read `_ACTIVE_INDEX.md` for a version newer than the one loaded at session entry, and reconcile before writing. This is a manual discipline enforced by the workflow text, not a filesystem lock — treat it as mandatory, not optional, whenever more than one engine is active in the same session.
-
----
-
-#### SECTION 6: RETROSPECTIVE & ARCHITECTURAL LESSONS (TOPIC HUB INTEGRATION)
-
-Based on the development lifecycle of the CNC and CWI production environments, we have codified several critical principles for multi-agent hybrid work:
-
-##### 1. Save-State Architecture & State Pruning
-*   **The Principle:** Treating the workspace state as a serialized versioned snapshot (`_ACTIVE_INDEX.md` and domain binaries) prevents the LLM from losing its structural constraints over long chats.
-*   **Active Pruning:** The introduction of the `hub_manager.py` command line utility automates the archival of older, obsolete state iterations to a dedicated `/archive/` directory. This keeps the primary `.agents/states/` scope clean and context-tight.
-
-##### 2. Localized Multi-Agent Governance
-*   **The Principle:** Agents must be constrained by local workspace configurations rather than general system-wide profiles.
-*   **Systemic Guardrails:**
-    *   **Config Isolation:** Confining VS Code / Codex behavior inside `.codex/config.toml` ensures that rules (e.g. allowed write roots, max line edits) are tailored to the codebase scope.
-    *   **Watcher Boundaries:** IDE watcher exclusions must completely block the monitoring of `.state/` and `/logs/` directories to prevent infinite loops.
-    *   **Zero-Trust Command Gates:** Primitives matching system mutations (e.g., `rm`, `sudo`, `wget`, `curl`) must go through explicit, manual operator approval loops.
-
-##### 3. Path Resilience & Relative Anchors
-*   **The Principle:** Governance configs and active instructions must use relative paths (e.g. `./validators/`) rather than absolute path strings. This ensures configuration robustness across different staging environments, absolute project mounts, and team-member systems.
-
-##### 4. Quality Gates & Validator Loops
-*   **The Principle:** Logic verification should not be deferred. Automated validators (such as syntax linters and structural integrity scripts) running on-save mathematically ensure that no regressions are committed to `src/` prior to the generation of exit state binaries.
-
+For VS Code, the remaining operational review scope is exactly
+`vscode/.codex/config.toml`, `vscode/.vscode/tasks.json`, and
+`vscode/validators/validate_config.py`. The `antigravity/` and `claude/` zones
+currently add no capability the seed lacks. All zones remain in place during
+this correction pass.
