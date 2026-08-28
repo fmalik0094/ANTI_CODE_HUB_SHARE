@@ -1,14 +1,15 @@
-# COMMAND: INITIATE PROJECT GENESIS
-# ENGINE: DETERMINISTIC_ARCHITECTURE_COMPILER
-## DIRECTIVE
-Process the raw unstructured objective injected below. Map the structural parameters utilizing raw logic. Do not output conversational brainstorming. Immediately compile the mapping into a V1 State Binary block.
-## UNSTRUCTURED OBJECTIVE
-[INSERT UNSTRUCTURED IDEAS OR TOPIC DATA HERE]
-## COMPILATION SCHEMA
-Output strictly as a single Markdown code block containing:
-1. **STATE HASH / DOMAIN:** [V1.0 - Domain ID]
-2. **GLOBAL OBJECTIVE:** [Immutable core goal]
-3. **ARCHITECTURE & ENVIRONMENT:** [Tech Stack, constraints, dependencies]
-4. **ACTIVE CONSTRAINTS:** [Operational thresholds, ruleset boundaries]
-5. **FAILURE MODES & RISKS:** [Bottlenecks, token decay traps]
-6. **NEXT EXECUTION NODE:** [The literal text prompt to initiate the next session]
+# WORKFLOW: 01_GENESIS_PROMPT
+
+Run once, when the project is first seeded from ANTI_CODE-HUB.
+
+1. Read `.agents/ORIENTATION.md` and fill in section 1 (what this project is).
+2. Read `.agents/rules/global.md` and claim one role from `.agents/AGENT_REGISTRY.md`.
+3. Define any parametric slots this project needs (`GEM-02` / `CDX-02` / `CLD-02`)
+   in the registry — specialization **and** activation condition. Leave unused
+   slots undefined rather than inventing roles.
+4. Replace `[PROJECT]` / `[PROJECT NAME]` placeholders in `CLAUDE.md` and
+   `ORIENTATION.md`.
+5. Initialize `.state/BASELINE.md` with this project's path and purpose.
+6. Verify layout: `python validators/validate_structure.py`.
+7. Initialize git if not already: `git init`, first commit.
+8. Hold for operator approval before mutating code.

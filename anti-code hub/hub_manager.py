@@ -29,7 +29,12 @@ def prune_states():
         if match:
             domain = match.group(1)
             try:
-                version = float(match.group(2))
+                # Parse as a (major, minor) tuple, NOT a float. float("1.10")
+                # is 1.1, which sorts BELOW float("1.9") — that would archive
+                # V1.10 as obsolete while keeping V1.9 as "latest truth",
+                # silently destroying the newest state binary at version 10.
+                major, minor = match.group(2).split(".")
+                version = (int(major), int(minor))
             except ValueError:
                 continue
                 

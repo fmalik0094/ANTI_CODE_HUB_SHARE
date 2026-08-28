@@ -2,14 +2,27 @@
   "permissions": {
     "allow": [
       "Read(.agents/**)",
+      "Read(.state/**)",
+      "Read(src/**)",
+      "Read(tests/**)",
+      "Read(validators/**)",
+      "Read(docs/**)",
       "Write(src/**)",
+      "Write(tests/**)",
+      "Write(validators/**)",
       "Write(outputs/**)",
-      "Write(.agents/states/**)"
+      "Write(.agents/states/**)",
+      "Write(.state/DELTA_LOG.md)",
+      "Write(.state/EXECUTION_LOG.md)"
     ],
     "ask": [
       "Bash(rm:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
       "Bash(git push --force:*)",
       "Bash(git reset --hard:*)",
+      "Bash(git checkout:*)",
+      "Bash(git clean:*)",
       "Bash(sudo:*)",
       "Bash(curl:*)",
       "Bash(wget:*)",
@@ -25,7 +38,8 @@
       "Read(credentials/**)",
       "Read(config/private/**)",
       "Read(.env)",
-      "Read(.env.*)"
+      "Read(.env.local)",
+      "Read(.env.*.local)"
     ]
   }
 }

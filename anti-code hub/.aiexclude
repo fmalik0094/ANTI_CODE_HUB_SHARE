@@ -1,0 +1,24 @@
+# CRYPTOGRAPHIC & PRIVACY HARD BLOCKLIST
+.env
+.env.local
+.env.*.local
+**/*.secret
+**/*.key
+**/*.pem
+credentials/
+config/private/
+.venv
+__pycache__/
+node_modules/
+bin/
+obj/
+logs/
+temp/
+*.csv
+*.tsv
+*.xlsx
+*.xlsm
+*.jsonl
+*.zip
+*.tar.gz
+*.pdf
