@@ -155,6 +155,44 @@ def check_agent_count_agreement():
     return errors
 
 
+BOOT_FILES = (
+    "CLAUDE.md",
+    "antigravity/.gemini/GEMINI.md",
+    "vscode/.codex/instructions.md",
+)
+
+
+def check_boot_files_dont_pin_slots():
+    """Slot 02 is parametric — each project defines its specialization. A boot
+    file that names a slot must say so, not assign it a fixed role.
+
+    This check exists because a migration to the 3+3 model updated the registry
+    and main.md but left all three boot files still pinning CLD-02 as "QA
+    Validator", GEM-02 as "multimodal ingestion", and CDX-02 as "file ops/git".
+    The registry said parametric while every entry point said otherwise.
+    """
+    errors = []
+    for rel_path in BOOT_FILES:
+        path = ROOT / rel_path
+        if not path.exists():
+            errors.append(f"Boot file missing: {rel_path}")
+            continue
+        text = path.read_text(encoding="utf-8")
+        mentions_slot = re.search(r"(?:GEM|CDX|CLD)-02", text)
+        if mentions_slot and "parametric" not in text.lower():
+            errors.append(
+                f"{rel_path} names a parametric slot (GEM/CDX/CLD-02) without "
+                f"describing it as parametric; it likely pins a fixed "
+                f"specialization that the project registry is supposed to define"
+            )
+        if "ORIENTATION.md" not in text:
+            errors.append(
+                f"{rel_path} does not point at .agents/ORIENTATION.md; every "
+                f"engine entry point must route to the single entry point"
+            )
+    return errors
+
+
 def check_checkpoint_consistency():
     """The version _ACTIVE_INDEX.md claims for a domain should match the
     version the domain's own state file declares."""
@@ -246,6 +284,7 @@ def main():
     all_errors += check_permission_paths_real(settings_data)
 
     all_errors += check_agent_count_agreement()
+    all_errors += check_boot_files_dont_pin_slots()
     all_errors += check_checkpoint_consistency()
     model_errors, model_warnings = check_model_reference_contract()
     all_errors += model_errors

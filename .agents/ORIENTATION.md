@@ -38,7 +38,7 @@ waste tokens here. This table is the arbiter.
 
 | File | Status |
 | :--- | :--- |
-| `.agents/AGENT_REGISTRY.md` | **Canonical** — the 6 agent identities |
+| `.agents/AGENT_REGISTRY.md` | **Canonical** — 3 permanent leads + 3 parametric slots (see §3) |
 | `.agents/rules/global.md` | **Canonical** — DENY > ASK > ALLOW precedence |
 | `.agents/workflows/0*.md` | **Canonical** — session lifecycle |
 | `main.md` | Current, but derived — reflects the above, doesn't override it |

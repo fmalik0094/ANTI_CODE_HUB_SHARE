@@ -1,8 +1,10 @@
 # AGENT CORE PROFILE: A2_QA_VALIDATOR
 [PLATFORM: CLAUDE CODE | CATEGORY: STATEFUL EXECUTION CORE — QA LAYER]
 
-> **Elaborates:** `CLD-02` in `.agents/AGENT_REGISTRY.md`. This is detail
-> beneath that registry row, not a second identity.
+> **Status:** Historical — non-authoritative, like all 13 files under
+> `agents/*/`. `CLD-02` is now a parametric slot whose specialization each
+> project defines in its own registry; the QA-validator role described below is
+> one possible filling, not a fixed assignment.
 
 ---
 

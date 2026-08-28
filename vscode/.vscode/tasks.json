@@ -6,7 +6,7 @@
             "type": "shell",
             "command": "python",
             "args": [
-                "validators/validate_structure.py"
+                "${workspaceFolder}/../validators/validate_structure.py"
             ],
             "group": "none",
             "presentation": {

@@ -14,7 +14,7 @@ projects — do not conflate the three; editing this file does not edit those.
    what this repo is, what's authoritative vs. historical, which decisions are
    settled, and how to work here. Reading it prevents rediscovering the
    workspace from scratch every session.
-2. Claim `CLD-01` (Deep Refactorer/Logic Lead) or `CLD-02` (QA Validator/Verification Lead) — one, not both.
+2. Claim `CLD-01` (permanent — deep refactor, correctness review, QA validation) or `CLD-02` (parametric slot — specialization defined by the project's own registry, not here). One, never both. If claiming `CLD-02` in a project, that project must state its specialization and activation condition first.
 3. Read `.agents/states/_ACTIVE_INDEX.md` and load the latest accepted state binary before touching anything.
 4. Check `.state/DECISIONS.md`, `.state/DELTA_LOG.md`, and `.state/EXECUTION_LOG.md` only if you need prior session detail — ORIENTATION.md covers the standing context.
 5. Propose your action plan and halt for `[PENDING OPERATOR APPROVAL]` — do not mutate files on the first turn.

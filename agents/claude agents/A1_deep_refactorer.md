@@ -1,8 +1,9 @@
 # AGENT CORE PROFILE: A1_DEEP_REFACTORER
 [PLATFORM: CLAUDE CODE | CATEGORY: STATEFUL EXECUTION CORE — QA LAYER]
 
-> **Elaborates:** `CLD-01` in `.agents/AGENT_REGISTRY.md`. This is detail
-> beneath that registry row, not a second identity.
+> **Status:** Historical — non-authoritative, like all 13 files under
+> `agents/*/`. Retained only as behavioral detail beneath `CLD-01` in
+> `.agents/AGENT_REGISTRY.md`, which is canonical. It is not a second identity.
 
 ---
 
