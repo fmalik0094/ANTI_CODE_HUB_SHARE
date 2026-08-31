@@ -107,6 +107,10 @@ don't silently act against it.
 - **`.claude/settings.json` is enforced, not advisory.** Unlike
   `.geminiignore`/`.aiexclude` (context filters), its `deny` entries are
   refused at the tool-call layer.
+- **The seed Codex config uses documented controls only.**
+  `anti-code hub/.codex/config.toml` sets `approval_policy = "untrusted"`,
+  `sandbox_mode = "workspace-write"`, and command-spawned network access off.
+  Codex documents no general command-name deny list; do not claim one exists.
 - **Never hand-copy a governance file between repos.** Doing so has twice
   silently dropped security rules and replaced project-specific content with
   generic boilerplate. Generate from what actually exists in the target.
@@ -136,6 +140,10 @@ operator to say so.
 required paths exist, `.claude/settings.json` parses and only grants paths that
 are real, the agent count agrees between `AGENT_REGISTRY.md` and `main.md`, and
 `_ACTIVE_INDEX.md` versions match the state files they reference.
+
+The seed's project-neutral validator additionally parses its
+`.codex/config.toml`, rejects keys outside the verified documented allowlist,
+and enforces the seed's approval, sandbox, and network posture.
 
 If it fails, it names the specific contradiction. Fix that — don't work around
 it.

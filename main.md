@@ -8,7 +8,7 @@
 #### SECTION 1: MASTER DIRECTORY TOPOLOGY
 
 `ANTI_CODE-HUB` is a rulebook and project seed, not an application. The tracked
-topology below was regenerated from the directory listing on 2026-08-28. Local
+topology below was regenerated from the directory listing on 2026-08-31. Local
 untracked files and `.git/` internals are intentionally omitted.
 
 ```text
@@ -32,7 +32,9 @@ ANTI_CODE-HUB/
 │   │   ├── states/
 │   │   └── workflows/
 │   ├── .claude/settings.json
-│   ├── .codex/instructions.md
+│   ├── .codex/
+│   │   ├── config.toml                   # Supported approval/sandbox posture
+│   │   └── instructions.md               # Codex execution instructions
 │   ├── .gemini/GEMINI.md
 │   ├── .state/                           # Initialized project journals
 │   ├── .vscode/settings.json
@@ -66,10 +68,10 @@ single template.
 held no file class the seed lacked. Each had carried a private duplicate of
 `.agents/` and/or `.state/` — four drifting copies of the same governance, which
 was the mechanism behind nearly every defect found in the 2026-08 audits.
-`vscode/.vscode/tasks.json` was adapted into the seed. `validate_config.py` was
-not carried: it only checked that `config.toml` existed, an existence check for
-a file whose contents enforce nothing. `config.toml` was not carried either —
-see §2.3. Per-engine zones must not be recreated.
+`vscode/.vscode/tasks.json` was adapted into the seed. The old
+`validate_config.py` and undocumented `config.toml` were not carried. A
+supported Codex configuration and semantic validation now live directly in the
+seed; see §2.3. Per-engine zones must not be recreated.
 
 ---
 
@@ -105,23 +107,32 @@ for a newly seeded project. A permission claim is valid only when the Claude
 session is actually governed by the applicable file — the hub's for work on the
 hub, the project's own for work in a seeded project.
 
-##### 3. Codex configuration status — OPEN GAP
+##### 3. Codex configuration status — SUPPORTED DEFAULT POSTURE
 
-The deleted `vscode/` zone contained a `.codex/config.toml` declaring keys for
-orchestration, token management, terminal review, and a command deny list
-(`rm`, `sudo`, `curl`, `wget`). **None of those keys appear in OpenAI's
-documented Codex configuration reference**, so nothing enforced them. That file
-was deliberately **not** carried into the seed: a configuration with keys that
-do nothing, while documentation claims it gates dangerous commands, is worse
-than having no file at all — it invites trust it cannot honor.
+`anti-code hub/.codex/config.toml` uses only keys verified against OpenAI's
+documented Codex configuration reference on 2026-08-31:
 
-Consequently this repository has **no Codex command deny list**. Codex safety
-currently comes from the host sandbox, its approval policy, operator
-instructions, and `.codex/instructions.md` — not from repository configuration.
+- `approval_policy = "untrusted"` lets known-safe reads run and asks for
+  operator approval before untrusted commands.
+- `sandbox_mode = "workspace-write"` permits work inside the active workspace
+  while retaining the Codex sandbox boundary.
+- `sandbox_workspace_write.network_access = false` keeps outbound access off
+  for scripts, programs, and subprocesses launched by commands.
 
-**Open work:** author a supported Codex configuration for the seed, verified
-against <https://developers.openai.com/codex/config-reference>. Until then, do
-not describe Codex command gating as enforced anywhere in this repository.
+Codex loads project-scoped configuration only after the project is trusted.
+The active host, managed requirements, and launch overrides can supersede this
+posture, so this file is a supported project default—not an immutable security
+policy.
+
+The documented schema still provides **no general command-name deny list**.
+`rm`, `sudo`, `curl`, and `wget` are not individually denied by this file and no
+approximate replacement is claimed. The `untrusted` approval policy asks before
+commands Codex classifies as untrusted; `.codex/instructions.md` and operator
+authorization remain separate governance layers.
+
+The seed validator parses the TOML, rejects keys outside the verified allowlist,
+and enforces these exact approval, sandbox, and network values. Source:
+<https://developers.openai.com/codex/config-reference>.
 
 ##### 4. Validator invocation
 
@@ -268,15 +279,14 @@ hard gate even when no tool enforces it.
 
 *Safeguard:* Tie every enforcement claim to an actual mechanism. In this
 repository, Claude Code permissions are enforced by `.claude/settings.json`.
-Gemini and Codex ignore files filter context and enforce nothing. There is
-currently **no** Codex command gate at all — the file that appeared to provide
-one used keys OpenAI does not document, and was deleted rather than carried
-forward (§2.3). Absence of a control is safer than a decorative one, because
-only the decorative one earns misplaced trust.
+Gemini and Codex ignore files filter context and enforce nothing. The seed's
+`.codex/config.toml` sets a documented sandbox and untrusted-command approval
+posture, but it is not a per-command deny list. The seed validator rejects
+unknown configuration keys so decorative controls cannot return silently.
 
 ---
 
-#### SECTION 6: ARCHITECTURAL LESSONS AND PENDING CONSOLIDATION
+#### SECTION 6: ARCHITECTURAL LESSONS AND CONSOLIDATION STATUS
 
 ##### 1. Orientation and state
 
@@ -319,9 +329,9 @@ seed lacked, `tasks.json` was adapted into the seed, and `antigravity/`,
 `vscode/`, and `claude/` were deleted. Four drifting copies of the same
 governance became one.
 
-Two files were deliberately not carried forward: `validate_config.py` (an
-existence check for a file that enforces nothing) and `config.toml` (undocumented
-keys — see §2.3, which remains the one open gap from this consolidation).
+The zone's `validate_config.py` was not carried forward because it only checked
+for file existence. Its undocumented `config.toml` was replaced—not copied—by
+the supported seed configuration and semantic checks described in §2.3.
 
 Per-engine zones must not be recreated. If an engine needs configuration, it
 belongs in the seed alongside the other two, where one validator covers it.

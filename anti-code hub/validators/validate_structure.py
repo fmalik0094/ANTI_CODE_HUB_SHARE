@@ -8,6 +8,7 @@ below the marked section rather than editing the inherited ones.
 import json
 import re
 import sys
+import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -24,6 +25,7 @@ REQUIRED_PATHS = [
     ".state/DELTA_LOG.md",
     ".state/EXECUTION_LOG.md",
     ".claude/settings.json",
+    ".codex/config.toml",
     ".codex/instructions.md",
     ".gemini/GEMINI.md",
     "CLAUDE.md",
@@ -38,6 +40,17 @@ BOOT_FILES = ("CLAUDE.md", ".gemini/GEMINI.md", ".codex/instructions.md")
 # Denials that are defensive by intent — they must hold whether or not the file
 # exists yet, so their paths are never checked for existence.
 PERMISSION_PATH_EXEMPTIONS = ("C:/", "../", "config/private", "credentials")
+
+# Verified against https://developers.openai.com/codex/config-reference on
+# 2026-08-31. Keep this deliberately narrow: the seed config needs only these
+# documented keys, so an unfamiliar key fails instead of becoming decorative
+# policy that Codex silently ignores.
+CODEX_CONFIG_TOP_LEVEL_KEYS = {
+    "approval_policy",
+    "sandbox_mode",
+    "sandbox_workspace_write",
+}
+CODEX_WORKSPACE_WRITE_KEYS = {"network_access"}
 
 
 def check_required_paths():
@@ -54,6 +67,65 @@ def load_claude_settings():
         return [], json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as e:
         return [f".claude/settings.json is not valid JSON: {e}"], None
+
+
+def load_codex_config():
+    path = ROOT / ".codex" / "config.toml"
+    try:
+        with path.open("rb") as config_file:
+            return [], tomllib.load(config_file)
+    except (OSError, tomllib.TOMLDecodeError) as e:
+        return [f".codex/config.toml is not valid TOML: {e}"], None
+
+
+def check_codex_config(config):
+    """Accept only the documented keys and the seed's review-first posture."""
+    errors = []
+    if config is None:
+        return errors
+
+    unknown_top_level = sorted(set(config) - CODEX_CONFIG_TOP_LEVEL_KEYS)
+    if unknown_top_level:
+        errors.append(
+            ".codex/config.toml contains unsupported top-level key(s): "
+            + ", ".join(unknown_top_level)
+        )
+
+    if config.get("approval_policy") != "untrusted":
+        errors.append(
+            ".codex/config.toml must set approval_policy = 'untrusted' so "
+            "untrusted commands require operator review"
+        )
+
+    if config.get("sandbox_mode") != "workspace-write":
+        errors.append(
+            ".codex/config.toml must set sandbox_mode = 'workspace-write'"
+        )
+
+    workspace_write = config.get("sandbox_workspace_write")
+    if not isinstance(workspace_write, dict):
+        errors.append(
+            ".codex/config.toml must define [sandbox_workspace_write]"
+        )
+        return errors
+
+    unknown_workspace_write = sorted(
+        set(workspace_write) - CODEX_WORKSPACE_WRITE_KEYS
+    )
+    if unknown_workspace_write:
+        errors.append(
+            ".codex/config.toml contains unsupported "
+            "sandbox_workspace_write key(s): "
+            + ", ".join(unknown_workspace_write)
+        )
+
+    if workspace_write.get("network_access") is not False:
+        errors.append(
+            ".codex/config.toml must set "
+            "sandbox_workspace_write.network_access = false"
+        )
+
+    return errors
 
 
 def check_permission_paths_real(settings):
@@ -165,6 +237,10 @@ def check_placeholders_replaced():
 def main():
     errors = []
     errors += check_required_paths()
+
+    config_errors, codex_config = load_codex_config()
+    errors += config_errors
+    errors += check_codex_config(codex_config)
 
     settings_errors, settings = load_claude_settings()
     errors += settings_errors

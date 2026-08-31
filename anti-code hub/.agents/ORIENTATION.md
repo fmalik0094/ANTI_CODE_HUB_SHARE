@@ -82,6 +82,10 @@ against it. Add this project's own settled decisions here as they accumulate.
 - **`.claude/settings.json` is enforced, not advisory.** Unlike
   `.geminiignore`/`.aiexclude` (context filters), its `deny` entries are
   refused at the tool-call layer.
+- **`.codex/config.toml` uses documented controls only.** It asks before
+  untrusted commands, limits command execution to the workspace-write sandbox,
+  and keeps command-spawned network access off. Codex documents no general
+  command-name deny list; do not claim one exists.
 - **Never hand-copy a governance file between repos.** It has repeatedly
   dropped security rules and replaced project-specific content with generic
   boilerplate. Generate from what actually exists in the target.

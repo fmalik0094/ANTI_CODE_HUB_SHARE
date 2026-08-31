@@ -1,0 +1,12 @@
+# Verified against the official Codex configuration reference on 2026-08-31:
+# https://developers.openai.com/codex/config-reference
+#
+# Codex has no documented general-purpose per-command deny-list key. This file
+# sets the supported project default: allow workspace edits, require approval
+# for untrusted commands, and keep command-spawned network access disabled.
+
+approval_policy = "untrusted"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = false
