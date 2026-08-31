@@ -44,7 +44,7 @@ waste tokens here. This table is the arbiter.
 | `main.md` | Current, but derived — reflects the above, doesn't override it |
 | `AGENTS.md` (root) | Stub pointing at the registry. Do not put a table back in it |
 | `agents/*/A*.md` (13 files) | **Historical.** Pre-date the agent-registry consolidation. Non-authoritative |
-| `FM-NOTES/*.md` | Reference/background. Some pre-dates the tri-engine model |
+| `FM-NOTES/*.md` | **Historical.** Dual-IDE era; 14 of 15 never mention Claude. See `FM-NOTES/README.md` for per-file triage — one file contains an enforcement claim that is factually wrong |
 
 ---
 
@@ -92,11 +92,13 @@ These were decided with evidence. Reopening them costs tokens and produces
 churn. If you believe one is wrong, say so explicitly and give new evidence —
 don't silently act against it.
 
-- **Zone folders stay for now.** `antigravity/`, `vscode/`, `claude/` are
-  staging areas for getting each engine's config right. Once a config is proven,
-  it folds into `anti-code hub/` and the zone goes. Flattening them all today
-  was considered and rejected — `anti-code hub/` must stay copyable as one
-  clean folder.
+- **Zone folders are gone — consolidation is complete.** `antigravity/`,
+  `vscode/`, and `claude/` were staging areas carrying private duplicates of
+  `.agents/` and `.state/`. Four drifting copies of the same governance caused
+  nearly every bug found in the 2026-08 audits. Verified they held nothing the
+  seed lacked, folded `tasks.json` into the seed, deleted all three.
+  `anti-code hub/` is now the single template and must stay copyable as one
+  clean folder. Do not recreate per-engine zones.
 - **Branches are the concurrency control**, not markdown re-reads. See §5.
 - **3 permanent agents + 3 parametric slots.** The count was previously stated
   as 6, 10, and 13 in different files simultaneously, then fixed at 6, then

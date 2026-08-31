@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Structural Verification",
+            "detail": "Manual quality gate. Passing does not authorize a commit.",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "${workspaceFolder}/validators/validate_structure.py"
+            ],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}

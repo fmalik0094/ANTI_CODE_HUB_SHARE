@@ -155,11 +155,10 @@ def check_agent_count_agreement():
     return errors
 
 
-BOOT_FILES = (
-    "CLAUDE.md",
-    "antigravity/.gemini/GEMINI.md",
-    "vscode/.codex/instructions.md",
-)
+# The hub's own boot surface. Engine zones were consolidated into the seed, so
+# the hub root now has exactly one engine entry file; the seed carries its own
+# three and is checked by the seed's project-neutral validator.
+BOOT_FILES = ("CLAUDE.md",)
 
 
 def check_boot_files_dont_pin_slots():

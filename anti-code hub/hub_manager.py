@@ -60,37 +60,33 @@ def prune_states():
                 
     print(f"\n[+] Pruning complete. Successfully archived {archived_count} obsolete state files.")
 
-def bundle_context(domain_query):
-    """
-    (Alpha) Concept: Reads the Entry Protocol and the latest state file, 
-    combining them so they are ready to be pasted into the Web UI.
-    """
-    ensure_dirs()
-    print(f"[*] Preparing Context Bundle for: {domain_query} (Not fully implemented yet)")
-    pass
+# NOT IMPLEMENTED — deliberately not exposed on the CLI.
+#
+# Two commands ("bundle", "parse") previously existed here as stubs that
+# printed "Not fully implemented yet" and then exited 0. Automation could call
+# them, see success, and conclude a context bundle or inbox merge had happened
+# when nothing had. A command that reports success without doing its work is
+# worse than an absent one, so they are removed from the parser rather than
+# left callable.
+#
+# If either is built later:
+#   bundle_context(domain) -> read the entry protocol plus the latest state
+#       binary and emit a single paste-ready block.
+#   parse_inbox()          -> scan .agents/inbox/ for raw engine output,
+#       extract markdown blocks, increment the domain version, write to
+#       .agents/states/, and update _ACTIVE_INDEX.md atomically.
+# Both must exit non-zero on failure and update _ACTIVE_INDEX.md in the same
+# operation that moves a state file — see the prune note above.
 
-def parse_inbox():
-    """
-    (Alpha) Concept: Scans .agents/inbox/ for raw Gemini output text, extracts markdown 
-    code blocks, increments the domain version, saves to states/, and updates _ACTIVE_INDEX.md.
-    """
-    ensure_dirs()
-    print("[*] Checking inbox for pending Web UI state merges... (Not fully implemented yet)")
-    pass
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="TOPIC-HUB-ENGINE Meta-Vault Manager")
-    parser.add_argument("command", choices=["prune", "bundle", "parse"], help="Action to perform")
-    parser.add_argument("--domain", help="Domain name for bundling")
-    
+    parser = argparse.ArgumentParser(
+        description="Anti-Code Hub state manager. Prunes superseded state "
+                    "binaries into .agents/states/archive/."
+    )
+    parser.add_argument("command", choices=["prune"], help="Action to perform")
+
     args = parser.parse_args()
     if args.command == "prune":
         prune_states()
-    elif args.command == "bundle":
-        if not args.domain:
-            print("[-] Error: --domain is required for bundling.")
-        else:
-            bundle_context(args.domain)
-    elif args.command == "parse":
-        parse_inbox()

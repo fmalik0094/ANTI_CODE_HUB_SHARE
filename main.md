@@ -47,25 +47,7 @@ ANTI_CODE-HUB/
 │   ├── AGENTS.md
 │   ├── CLAUDE.md
 │   └── hub_manager.py
-├── antigravity/                          # Antigravity staging zone
-│   ├── .agents/
-│   ├── .gemini/GEMINI.md
-│   └── AGENTS.md
-├── claude/                               # Claude Code staging zone
-│   ├── .agents/
-│   ├── .claude/settings.json
-│   ├── .state/
-│   ├── outputs/
-│   ├── src/
-│   ├── AGENTS.md
-│   └── CLAUDE.md
-├── vscode/                               # VS Code/Codex staging zone
-│   ├── .codex/
-│   ├── .state/
-│   ├── .vscode/
-│   ├── src/
-│   └── validators/
-├── FM-NOTES/                             # Historical and reference manuals
+├── FM-NOTES/                             # Historical; see FM-NOTES/README.md
 ├── validators/validate_structure.py      # Hub structural/semantic validator
 ├── .aiexclude                            # Codex context filter
 ├── .geminiignore                         # Gemini context filter
@@ -75,17 +57,19 @@ ANTI_CODE-HUB/
 └── main.md                               # This derived manual
 ```
 
-The seed now contains the orientation, registry, engine entry/configuration
-files, filters, state journals, and project-neutral validator listed above.
-The `antigravity/` and `claude/` zones contain no capability or path class
-absent from the seed; they remain staging copies until their proven
-configuration is folded into the seed and the zones can be deleted.
+The seed contains the orientation, registry, engine entry/configuration files,
+filters, state journals, and project-neutral validator listed above. It is the
+single template.
 
-The VS Code zone has three unique operational files still awaiting that
-decision: `vscode/.codex/config.toml`, `vscode/.vscode/tasks.json`, and
-`vscode/validators/validate_config.py`. Its other files are staging mirrors or
-legacy zone state. In particular, `vscode/.state/BASELINE_HASH.md` is not a
-fourth engine capability and should not be promoted as one.
+**Zone consolidation is complete.** The former `antigravity/`, `vscode/`, and
+`claude/` staging zones were deleted on 2026-08-28 after verification that they
+held no file class the seed lacked. Each had carried a private duplicate of
+`.agents/` and/or `.state/` — four drifting copies of the same governance, which
+was the mechanism behind nearly every defect found in the 2026-08 audits.
+`vscode/.vscode/tasks.json` was adapted into the seed. `validate_config.py` was
+not carried: it only checked that `config.toml` existed, an existence check for
+a file whose contents enforce nothing. `config.toml` was not carried either —
+see §2.3. Per-engine zones must not be recreated.
 
 ---
 
@@ -117,30 +101,35 @@ destructive, elevated, download, and web-fetch operations and denies the named
 system, parent, credential, key, and environment-file paths.
 
 `anti-code hub/.claude/settings.json` provides the project-neutral equivalent
-for a newly seeded project. `claude/.claude/settings.json` remains a staging
-variant. A permission claim is valid only when the Claude session is governed
-by the applicable file.
+for a newly seeded project. A permission claim is valid only when the Claude
+session is actually governed by the applicable file — the hub's for work on the
+hub, the project's own for work in a seeded project.
 
-##### 3. Codex configuration status
+##### 3. Codex configuration status — OPEN GAP
 
-`vscode/.codex/config.toml` currently contains staging keys for orchestration,
-token management, terminal review, and a command list. Those keys are not in
-OpenAI's documented Codex configuration reference, so this file must not be
-described as enforcing them. The repository currently has no supported Codex
-`config.toml` command deny list for `rm`, `sudo`, `curl`, or `wget`.
+The deleted `vscode/` zone contained a `.codex/config.toml` declaring keys for
+orchestration, token management, terminal review, and a command deny list
+(`rm`, `sudo`, `curl`, `wget`). **None of those keys appear in OpenAI's
+documented Codex configuration reference**, so nothing enforced them. That file
+was deliberately **not** carried into the seed: a configuration with keys that
+do nothing, while documentation claims it gates dangerous commands, is worse
+than having no file at all — it invites trust it cannot honor.
 
-Codex safety therefore comes from the active host sandbox, approval policy,
-operator instructions, and canonical workspace rules—not from the custom keys
-in `vscode/.codex/config.toml`. Supported project configuration must be checked
-against <https://developers.openai.com/codex/config-reference> before the VS
-Code staging file is folded into the seed.
+Consequently this repository has **no Codex command deny list**. Codex safety
+currently comes from the host sandbox, its approval policy, operator
+instructions, and `.codex/instructions.md` — not from repository configuration.
+
+**Open work:** author a supported Codex configuration for the seed, verified
+against <https://developers.openai.com/codex/config-reference>. Until then, do
+not describe Codex command gating as enforced anywhere in this repository.
 
 ##### 4. Validator invocation
 
-`python validators/validate_structure.py` is the hub quality gate. It runs when
-an operator or agent invokes it. `vscode/.vscode/tasks.json` exposes manual VS
-Code tasks, but no repository file runs the validator automatically on save and
-validation does not unlock authorization gates.
+`python validators/validate_structure.py` is the hub quality gate; the seed
+carries its own project-neutral equivalent. Both run only when an operator or
+agent invokes them. `anti-code hub/.vscode/tasks.json` exposes a manual VS Code
+task as a convenience launcher. No repository file runs a validator
+automatically on save, and validation does not unlock any authorization gate.
 
 ---
 
@@ -184,9 +173,10 @@ isolated on its engine branch and handoffs are explicit.
 
 #### SECTION 4: TRI-ENGINE LIFECYCLE
 
-Every engine session starts at `.agents/ORIENTATION.md`. The engine instruction
-surfaces `antigravity/.gemini/GEMINI.md`, `vscode/.codex/instructions.md`, and
-`CLAUDE.md` all route sessions to that canonical entry point.
+Every engine session starts at `.agents/ORIENTATION.md`. In this hub, root
+`CLAUDE.md` routes there. In a seeded project, all three engine entry files —
+`CLAUDE.md`, `.gemini/GEMINI.md`, and `.codex/instructions.md` — route to that
+project's own copy.
 
 ```text
 [BOOT]                         [WORK]                         [EXIT]
@@ -278,8 +268,11 @@ hard gate even when no tool enforces it.
 
 *Safeguard:* Tie every enforcement claim to an actual mechanism. In this
 repository, Claude Code permissions are enforced by `.claude/settings.json`.
-Gemini and Codex ignore files filter context. The custom policies currently in
-`vscode/.codex/config.toml` are not an enforced Codex command gate.
+Gemini and Codex ignore files filter context and enforce nothing. There is
+currently **no** Codex command gate at all — the file that appeared to provide
+one used keys OpenAI does not document, and was deleted rather than carried
+forward (§2.3). Absence of a control is safer than a decorative one, because
+only the decorative one earns misplaced trust.
 
 ---
 
@@ -321,13 +314,14 @@ resource.
 
 The current settled plan is staged consolidation, not immediate deletion:
 
-1. Verify an engine-specific configuration in its zone.
-2. Adapt the proven configuration to the project-neutral seed.
-3. Validate the seed.
-4. Delete the redundant zone only in a separately approved pass.
+Completed on 2026-08-28. All three zones were verified to hold no file class the
+seed lacked, `tasks.json` was adapted into the seed, and `antigravity/`,
+`vscode/`, and `claude/` were deleted. Four drifting copies of the same
+governance became one.
 
-For VS Code, the remaining operational review scope is exactly
-`vscode/.codex/config.toml`, `vscode/.vscode/tasks.json`, and
-`vscode/validators/validate_config.py`. The `antigravity/` and `claude/` zones
-currently add no capability the seed lacks. All zones remain in place during
-this correction pass.
+Two files were deliberately not carried forward: `validate_config.py` (an
+existence check for a file that enforces nothing) and `config.toml` (undocumented
+keys — see §2.3, which remains the one open gap from this consolidation).
+
+Per-engine zones must not be recreated. If an engine needs configuration, it
+belongs in the seed alongside the other two, where one validator covers it.
