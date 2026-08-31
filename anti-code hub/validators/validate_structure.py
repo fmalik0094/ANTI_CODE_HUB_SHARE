@@ -8,8 +8,17 @@ below the marked section rather than editing the inherited ones.
 import json
 import re
 import sys
-import tomllib
 from pathlib import Path
+
+# tomllib is stdlib only on Python 3.11+. This validator ships into arbitrary
+# seeded projects, so a bare import would abort every check on an older
+# interpreter — losing agent-registry, boot-file, and permission validation to
+# an unrelated TOML dependency. Degrade to skipping just the Codex config check,
+# and say so loudly rather than passing silently.
+try:
+    import tomllib
+except ImportError:  # pragma: no cover - depends on interpreter version
+    tomllib = None
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -71,6 +80,13 @@ def load_claude_settings():
 
 def load_codex_config():
     path = ROOT / ".codex" / "config.toml"
+    if tomllib is None:
+        print(
+            f"[WARN] Python {sys.version_info.major}.{sys.version_info.minor} "
+            "has no tomllib (needs 3.11+); .codex/config.toml was NOT "
+            "validated. Its posture is unverified on this interpreter."
+        )
+        return [], None
     try:
         with path.open("rb") as config_file:
             return [], tomllib.load(config_file)
