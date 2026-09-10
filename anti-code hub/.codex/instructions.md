@@ -36,3 +36,10 @@ authorization to push.
 2. Maintain watcher exclusions to block token feedback loops.
 3. Run `python validators/validate_structure.py` before claiming done.
 4. Update `.state/` logs incrementally on task completion.
+
+## 5. Configuration Compatibility
+The seed omits explicit approval policy; effective approval is inherited from
+app/user/managed settings. REQUEST REVIEW remains an operator rule, not a claim
+that the seed asks for every command. Before changing configuration, read
+`.agents/resources/CODEX_COMPATIBILITY.md` and run its separate regression and
+runtime checks. Do not change global user settings to make a check pass.

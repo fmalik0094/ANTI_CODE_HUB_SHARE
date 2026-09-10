@@ -2,6 +2,10 @@
 
 This document serves as the master blueprint to initialize new project workspaces under strict multi-agent (Antigravity/Codex/Claude) local governance rules.
 
+> Legacy blueprint, not the canonical seed contract. Use `.agents/ORIENTATION.md`
+> and the actual seed files for initialization. Template B below routes to the
+> current Codex configuration; do not regenerate configuration from old examples.
+
 ---
 
 ## 1. TARGET DIRECTORY MATRIX
@@ -20,7 +24,7 @@ This document serves as the master blueprint to initialize new project workspace
 │       ├── 02_entry_and_propose.md     # Entry protocol template
 │       └── 03_exit_and_sync.md         # Exit/Sync protocol template
 ├── .codex/
-│   ├── config.toml                     # Codex orchestration allowed/denied paths
+│   ├── config.toml                     # Sandbox defaults; approvals inherited
 │   └── [DOMAIN]_CODEX_RULES.md         # Codex preflight and safety checks
 ├── .claude/
 │   └── settings.json                   # Claude Code permissions.allow/ask/deny enforcement
@@ -47,18 +51,10 @@ This document serves as the master blueprint to initialize new project workspace
 ```
 
 ### Template B: `.codex/config.toml`
-```toml
-[agent_orchestration]
-engine = "openai-codex"
-sandbox_mode = true
-network_access = false
-max_file_edit_lines = 0
-
-[workspace_governance]
-allowed_write_roots = [".agent/skills/", ".agents/states/", "docs/", "src/", "outputs/"]
-denied_write_roots = ["C:/Windows/", "C:/Program Files/"]
-require_human_gate = true
-```
+Use the actual [seed configuration](../../.codex/config.toml) and
+[compatibility guidance](../resources/CODEX_COMPATIBILITY.md).
+The former orchestration/governance tables used undocumented keys and must not
+be generated. Approval policy is deliberately omitted, not replaced by `never`.
 
 ### Template C: `.agents/rules/global.md`
 ```markdown

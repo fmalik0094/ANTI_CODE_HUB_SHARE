@@ -6,6 +6,19 @@ this file records what changed and when.
 
 ---
 
+## Unreleased — 2026-09-10 compatibility correction
+
+- Removed the retired explicit Codex approval policy from the seed; retained
+  workspace-write and command network-off. Approvals are inherited, not
+  guaranteed per command by the seed. ADR-0011 records the boundary.
+- Updated the seed validator and current guidance; added regression tests and
+  an independent runtime loader probe. The earlier V1.1 configuration claim
+  below is historical and superseded, not current setup guidance.
+- Recorded the [Mastercam incident and verification limits](anti-code%20hub/.agents/resources/CODEX_COMPATIBILITY.md).
+  No cross-project propagation or desktop startup verification is claimed.
+
+---
+
 ## V1.1 — 2026-08-31
 
 Governance revamp. The contract described a system that did not match disk in

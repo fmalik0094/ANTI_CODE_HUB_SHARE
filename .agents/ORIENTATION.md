@@ -108,9 +108,13 @@ don't silently act against it.
   `.geminiignore`/`.aiexclude` (context filters), its `deny` entries are
   refused at the tool-call layer.
 - **The seed Codex config uses documented controls only.**
-  `anti-code hub/.codex/config.toml` sets `approval_policy = "untrusted"`,
-  `sandbox_mode = "workspace-write"`, and command-spawned network access off.
-  Codex documents no general command-name deny list; do not claim one exists.
+  `anti-code hub/.codex/config.toml` omits explicit approval policy, retains
+  `workspace-write`, and keeps command-spawned network access off when loaded.
+  Approval behavior is inherited from app/user/managed policy, not guaranteed
+  per command by the seed. New runtime evidence supersedes the old approval
+  default: see the [Mastercam compatibility incident](../anti-code%20hub/.agents/resources/CODEX_COMPATIBILITY.md)
+  and ADR-0011. No command-name deny list is claimed. Project trust can disable
+  project-local config; it is not the retired explicit approval setting.
 - **Never hand-copy a governance file between repos.** Doing so has twice
   silently dropped security rules and replaced project-specific content with
   generic boilerplate. Generate from what actually exists in the target.
@@ -143,7 +147,10 @@ are real, the agent count agrees between `AGENT_REGISTRY.md` and `main.md`, and
 
 The seed's project-neutral validator additionally parses its
 `.codex/config.toml`, rejects keys outside the verified documented allowlist,
-and enforces the seed's approval, sandbox, and network posture.
+and requires omitted approval policy, workspace-write, and network-off. That
+is seed-contract validation, not proof of effective host policy. Configuration
+changes also require the seed's `validators/test_validate_structure.py` and
+`validators/check_codex_runtime.py`; desktop task startup is a separate check.
 
 If it fails, it names the specific contradiction. Fix that — don't work around
 it.
