@@ -26,3 +26,9 @@ Private draft publication is approved; merge, public share, global settings,
 cross-workspace rollout and live harvest remain blocked. Baselines, decisions,
 state snapshots, permission files, local settings and other repositories remain
 unchanged. Final publication receipt follows after remote verification.
+
+Publication verified: private draft PR #1 at
+https://github.com/fmalik0094/ANTI_CODE_HUB/pull/1 is OPEN/draft against main.
+Repair checkpoint 59043e08999eefb03d03de209cd8148e05fc55f1 matched local,
+origin and PR heads. Main remains b85a6c1; public share remains e106410.
+CDX-01 released ownership; Gemini receives read-only review, not release authority.

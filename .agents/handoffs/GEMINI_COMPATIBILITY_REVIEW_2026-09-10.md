@@ -80,3 +80,18 @@ separate operator approval. Private branch publication is not public-release
 approval. An independently approved pilot must prove configuration loading and
 desktop behavior before any cross-workspace rollout. This handoff ends at review
 findings and a proposal; it must not be interpreted as "finish everything."
+
+## Verified publication receipt — 2026-09-10
+
+[Private draft PR #1](https://github.com/fmalik0094/ANTI_CODE_HUB/pull/1) was
+verified OPEN and draft against main. The repair checkpoint
+`59043e08999eefb03d03de209cd8148e05fc55f1` matched local HEAD, origin branch
+and PR head; a documentation-only receipt follows that checkpoint. Always use
+the PR's current head for review, not an earlier chat's SHA.
+
+The cumulative PR has sixteen files: the earlier fifteen-file correction plus
+this handoff, with the follow-up edits layered on existing files. No binary
+evidence or local settings are included. Private main remains `b85a6c1`;
+public share main remains `e106410`, with no matching compatibility branch.
+The follow-up execution is COMPLETE_REVIEW_PUBLISHED and CDX-01's write claim
+is released. Gemini's remaining work is independent read-only review.

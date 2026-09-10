@@ -106,3 +106,20 @@ policy changes and cross-workspace rollout remain separate operator actions.
   will target only the existing private review branch and a draft PR against main.
 - Gemini receives a review-only handoff. No merge, public release, project
   template propagation, global trust changes or application execution authorized.
+
+### Publication and exit — 2026-09-10T20:57:57Z
+
+- Final parent rerun: 29/29 PASS (1.222s); root validator exit 0; seed validator
+  exit 0 with three expected generic placeholder warnings and scoped success.
+- Independent eleven-file text review found no blocker or high-confidence
+  credential-pattern match. Protected baseline/decision/state/policy paths have
+  no diff against the pre-follow-up HEAD. Local-only settings were never staged.
+- Exact eleven-file allowlist committed as
+  59043e08999eefb03d03de209cd8148e05fc55f1 and pushed only to private origin's
+  cdx/codex-approval-compatibility. Existing commit 44eb18a was not duplicated.
+- Private draft PR #1 verified OPEN/draft, base main, matching review head,
+  sixteen cumulative files. Private origin/main b85a6c1 and public share/main
+  e106410 unchanged; no public compatibility branch appeared.
+- Documentation-only publication receipt follows; no source/config changes.
+- Status: COMPLETE_REVIEW_PUBLISHED. CDX-01 ownership released. GEM-01 handoff
+  is review-only. No merge, public release, propagation or automatic continuation.
