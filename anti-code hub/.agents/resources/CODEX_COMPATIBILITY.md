@@ -77,6 +77,13 @@ python -B validators/check_codex_runtime.py
    must fail usefully. The latter two prove the serialized keys were consumed.
 5. Desktop: operator creates a fresh task and confirms startup separately.
 
+The seed structural validator's exit codes are 0 for completed implemented static
+checks, 1 for confirmed failures, and 2 for incomplete verification. If TOML
+parsing is unavailable, the Codex check is UNVERIFIED while the remaining checks
+continue. Confirmed failures override incomplete verification. Ordinary seed
+placeholder warnings do not change the exit code. A static success is not proof
+of configuration loading, command enforcement or desktop startup.
+
 The runtime probe uses `features list`, not `--help`. It first runs in the
 project directory, then passes TOML values read from the seed as explicit `-c`
 arguments. Ambient user/managed configuration remains in place. It does not

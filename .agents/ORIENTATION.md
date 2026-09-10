@@ -152,6 +152,11 @@ is seed-contract validation, not proof of effective host policy. Configuration
 changes also require the seed's `validators/test_validate_structure.py` and
 `validators/check_codex_runtime.py`; desktop task startup is a separate check.
 
+The seed validator's result contract is 0 = implemented static checks completed,
+1 = confirmed failure, 2 = incomplete verification (for example no TOML parser).
+Missing TOML support does not stop other checks; failures take precedence over
+incomplete verification. Seed placeholder warnings are not runtime certification.
+
 If it fails, it names the specific contradiction. Fix that — don't work around
 it.
 

@@ -79,7 +79,7 @@ ANTI_CODE-HUB/
 ```bash
 cp -r "anti-code hub" /path/to/NEW_PROJECT
 cd /path/to/NEW_PROJECT
-python validators/validate_structure.py    # passes out of the box
+python validators/validate_structure.py    # scoped static checks; Python 3.11+
 ```
 
 Then follow `.agents/workflows/01_genesis_prompt.md` — it walks through replacing `[PROJECT NAME]` placeholders, defining any parametric slots the project needs, and `git init`.
@@ -145,7 +145,12 @@ An earlier version performed 16 existence checks and passed green while the repo
 
 Staleness **warns without failing** — an aging reference should never block unrelated work.
 
-*Requires Python 3.11+ for full coverage; on older interpreters the TOML check is skipped with an explicit warning and everything else still runs.*
+The seed validator uses exit **0** for completed implemented static checks,
+**1** for confirmed failures, and **2** for incomplete verification. Python 3.11+
+provides TOML parsing; without it, other checks continue, but the skipped Codex
+check is UNVERIFIED rather than success. Confirmed failures take precedence.
+Seed placeholders remain readiness warnings. No exit code certifies desktop
+startup, project-file inclusion or effective permission enforcement.
 
 ---
 

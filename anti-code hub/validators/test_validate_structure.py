@@ -184,15 +184,71 @@ class SeedContractTests(unittest.TestCase):
         self.assertEqual(code, 1, output)
         self.assertIn("not valid JSON", output)
 
-    def test_no_tomllib_warns_but_does_not_abort_other_checks(self):
+    def test_no_tomllib_is_unverified_but_does_not_abort_other_checks(self):
         with mock.patch.object(validator, "tomllib", None):
             code, output = self.run_validator()
-            self.assertEqual(code, 0, output)
+            self.assertEqual(code, 2, output)
+            self.assertIn("[UNVERIFIED]", output)
+            self.assertNotIn("[SUCCESS]", output)
             self.assertIn("was NOT validated", output)
             (self.root / "CLAUDE.md").write_text("No boot routing", encoding="utf-8")
             code, output = self.run_validator()
         self.assertEqual(code, 1, output)
+        self.assertNotIn("[SUCCESS]", output)
         self.assertIn("does not point at", output)
+
+    def test_no_tomllib_and_invalid_json_reports_failure(self):
+        (self.root / ".claude/settings.json").write_text("{", encoding="utf-8")
+        with mock.patch.object(validator, "tomllib", None):
+            code, output = self.run_validator()
+        self.assertEqual(code, 1, output)
+        self.assertIn("not valid JSON", output)
+        self.assertNotIn("[SUCCESS]", output)
+
+    def test_unparsed_retired_config_is_unverified_not_approved(self):
+        path = self.root / ".codex/config.toml"
+        path.write_text('approval_policy = "untrusted"\n' + path.read_text(encoding="utf-8"), encoding="utf-8")
+        with mock.patch.object(validator, "tomllib", None):
+            code, output = self.run_validator()
+        self.assertEqual(code, 2, output)
+        self.assertIn("[UNVERIFIED]", output)
+        self.assertNotIn("[SUCCESS]", output)
+
+    def test_parser_recovery_does_not_retain_incomplete_status(self):
+        if validator.tomllib is None:
+            self.skipTest("Parser recovery requires Python 3.11+")
+        with mock.patch.object(validator, "tomllib", None):
+            self.assertEqual(self.run_validator()[0], 2)
+        code, output = self.run_validator()
+        self.assertEqual(code, 0, output)
+        self.assertNotIn("[UNVERIFIED]", output)
+
+    def test_success_is_scoped_and_placeholders_remain_readiness_warnings(self):
+        if validator.tomllib is None:
+            self.skipTest("Verified seed requires Python 3.11+")
+        code, output = self.run_validator()
+        self.assertEqual(code, 0, output)
+        self.assertIn("[WARN]", output)
+        self.assertIn("implemented seed-contract checks", output)
+        self.assertIn("are not certified", output)
+        self.assertNotIn("All structural and semantic checks passed", output)
+
+    def test_inspection_preserves_fixture_bytes_for_each_result(self):
+        if validator.tomllib is None:
+            self.skipTest("All three result states require Python 3.11+")
+        def snapshot():
+            return {p.relative_to(self.root): p.read_bytes()
+                    for p in self.root.rglob("*") if p.is_file()}
+        before = snapshot()
+        self.assertEqual(self.run_validator()[0], 0)
+        self.assertEqual(snapshot(), before)
+        with mock.patch.object(validator, "tomllib", None):
+            self.assertEqual(self.run_validator()[0], 2)
+            self.assertEqual(snapshot(), before)
+            (self.root / "CLAUDE.md").write_text("No boot routing", encoding="utf-8")
+            before_failure = snapshot()
+            self.assertEqual(self.run_validator()[0], 1)
+            self.assertEqual(snapshot(), before_failure)
 
 
 class RuntimeProbeSerializationTests(unittest.TestCase):

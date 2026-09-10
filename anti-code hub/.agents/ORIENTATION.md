@@ -117,6 +117,12 @@ For Codex configuration changes, also run
 and `python -B validators/check_codex_runtime.py`. Unit/semantic agreement is
 not runtime proof, and the CLI probe does not prove desktop task startup.
 
+The seed structural validator returns 0 for completed implemented static checks,
+1 for confirmed failures, and 2 for incomplete verification. Without the TOML
+parser, other checks still run but the Codex check is UNVERIFIED; any confirmed
+failure takes precedence. Placeholder warnings remain separate readiness notes.
+Project loading and effective permissions still require independent evidence.
+
 ---
 
 ## 6. Keeping this file honest

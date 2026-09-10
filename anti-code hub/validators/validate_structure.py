@@ -14,7 +14,7 @@ from pathlib import Path
 # seeded projects, so a bare import would abort every check on an older
 # interpreter — losing agent-registry, boot-file, and permission validation to
 # an unrelated TOML dependency. Degrade to skipping just the Codex config check,
-# and say so loudly rather than passing silently.
+# continue other checks, and report incomplete verification with exit 2.
 try:
     import tomllib
 except ImportError:  # pragma: no cover - depends on interpreter version
@@ -83,7 +83,7 @@ def load_codex_config():
     path = ROOT / ".codex" / "config.toml"
     if tomllib is None:
         print(
-            f"[WARN] Python {sys.version_info.major}.{sys.version_info.minor} "
+            f"[UNVERIFIED] Python {sys.version_info.major}.{sys.version_info.minor} "
             "has no tomllib (needs 3.11+); .codex/config.toml was NOT "
             "validated. Its posture is unverified on this interpreter."
         )
@@ -289,7 +289,18 @@ def main():
             print(f"  - {e}")
         sys.exit(1)
 
-    print("[SUCCESS] All structural and semantic checks passed.")
+    if codex_config is None:
+        print(
+            "[UNVERIFIED] Static verification incomplete: .codex/config.toml "
+            "was not validated; other implemented checks completed."
+        )
+        sys.exit(2)
+
+    print(
+        "[SUCCESS] Required structure and implemented seed-contract checks "
+        "passed; project loading, runtime enforcement and desktop startup "
+        "are not certified."
+    )
     sys.exit(0)
 
 

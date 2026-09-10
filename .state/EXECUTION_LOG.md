@@ -68,3 +68,41 @@ All paths below are relative to this workspace. No task file is staged.
 Pre-existing `.claude/settings.local.json` remains untracked and unchanged;
 it is not part of this change set. Commit, merge, push, desktop retry, global
 policy changes and cross-workspace rollout remain separate operator actions.
+
+## CDX-01-20260910-SEED-STATUS-02 — approved follow-up entry
+
+- Identity: CDX-01; started 2026-09-10T20:49:11Z; status ACTIVE.
+- User approved the proposed incomplete-verification repair, current publication
+  evidence and private draft PR, with a Gemini continuation prompt.
+- Scope: seed validator/result tests, current validation guidance, append-only
+  ledgers and a new handoff. No sandbox/approval/configuration changes.
+- Rechecked clean cdx/codex-approval-compatibility at
+  44eb18a44fda1fe9908c25e3e88eb0724cfae726; private origin branch matches.
+  Local/remote main remain b85a6c157568db3bb41ecb1194d3332d2c36729b.
+- Earlier entries describing uncommitted work are dated history, not the current
+  publication state. The 15-file commit already existed before this follow-up.
+- No merge, public share push, history rewrite, global setting change, live
+  harvest, cross-workspace propagation or application operation is authorized.
+- Subagents review read-only beneath this identity. Exact allowlist staging only;
+  local settings, baselines, decisions and source-state snapshots are preserved.
+
+### Implementation and verification
+
+- apply_patch changed only the approved seed validator/result tests, current
+  validation guidance, handoff and append-only evidence. Existing seed config
+  remains workspace-write/network-off with no explicit approval policy.
+- Seed validator: missing TOML check reports UNVERIFIED/2; known errors still
+  produce FAIL/1 first; other implemented checks run before either result.
+- Parent regression run: 29/29 PASS (1.210s); root/seed validators report success.
+- Independent review: 29/29 PASS, no skips (1.190s), Python 3.14.4. Separate
+  synthetic matrix reproduced 0 verified, 2 missing parser, 1 missing parser
+  with broken boot/missing config, then 0 on parser restoration. Fixture bytes
+  unchanged in each case; seven watched source/config hashes unchanged.
+- Missing-parser evidence uses a mock, not an actual older Python installation.
+  Runtime prober/config were not changed or executed in this follow-up. Existing
+  0.153.4 runtime records remain dated evidence; loading/enforcement/desktop
+  behavior stay UNVERIFIED.
+- Public share is confirmed public, private origin confirmed private. Publication
+  will target only the existing private review branch and a draft PR against main.
+- Gemini receives a review-only handoff. No merge, public release, project
+  template propagation, global trust changes or application execution authorized.

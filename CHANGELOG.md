@@ -8,6 +8,11 @@ this file records what changed and when.
 
 ## Unreleased — 2026-09-10 compatibility correction
 
+- Follow-up: unavailable TOML parsing now produces UNVERIFIED/exit 2 after other
+  checks run; confirmed failures retain exit 1 precedence. Success text is scoped
+  to implemented seed-contract checks. Five new regressions expand the suite
+  from 24 to 29 tests; existing configuration defaults are unchanged.
+
 - Removed the retired explicit Codex approval policy from the seed; retained
   workspace-write and command network-off. Approvals are inherited, not
   guaranteed per command by the seed. ADR-0011 records the boundary.

@@ -317,6 +317,11 @@ The root validator checks this hub. The seed's
 the inherited contract after the seed is copied. Both are manually invoked;
 neither proves application correctness or authorizes Git operations.
 
+The seed validator distinguishes completed implemented static checks (exit 0),
+confirmed failures (1), and incomplete verification (2). An unavailable TOML
+parser skips only that check, never reports overall success, and never hides
+failures found elsewhere. Seed placeholder warnings remain readiness notes.
+
 ##### 4. State utility status
 
 `anti-code hub/hub_manager.py` exists, but its `bundle` and `parse`
