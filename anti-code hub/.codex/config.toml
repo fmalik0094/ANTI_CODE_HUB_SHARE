@@ -1,11 +1,13 @@
-# Verified against the official Codex configuration reference on 2026-08-31:
-# https://developers.openai.com/codex/config-reference
+# Verified against the official Codex configuration reference on 2026-09-10:
+# https://learn.chatgpt.com/docs/config-file/config-reference
+# Migration: https://learn.chatgpt.com/docs/agent-approvals-security
 #
-# Codex has no documented general-purpose per-command deny-list key. This file
-# sets the supported project default: allow workspace edits, require approval
-# for untrusted commands, and keep command-spawned network access disabled.
+# Approval behavior is inherited from app/user/managed policy. Deliberately omit
+# approval_policy; the retired "untrusted" value prevents current runtime loading.
+# This seed does NOT guarantee review of every command or a command-name deny list.
+# Project trust and higher-priority configuration determine whether these defaults
+# apply. See .agents/resources/CODEX_COMPATIBILITY.md before changing this contract.
 
-approval_policy = "untrusted"
 sandbox_mode = "workspace-write"
 
 [sandbox_workspace_write]

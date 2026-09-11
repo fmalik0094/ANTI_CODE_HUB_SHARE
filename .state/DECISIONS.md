@@ -58,3 +58,17 @@ decision here is not relitigated without new evidence. `.agents/ORIENTATION.md`
   removed, not left callable.** `hub_manager.py`'s `bundle` and `parse` printed
   "not implemented" and exited 0. Removed from the CLI so automation fails
   loudly instead of recording a phantom success.
+
+- **ADR-0011 (2026-09-10): Omit generic seed approval policy; verify runtime
+  compatibility independently of template agreement.** The operator-reported
+  Mastercam incident and local `codex-cli 0.153.4` negative control demonstrate
+  that explicit `approval_policy = "untrusted"` is retired. The old validator
+  required the defect; green governance checks were not evidence of runtime
+  support. Keep workspace-write/network-off, reject explicit approval overrides
+  under the narrow seed contract, and inherit app/user/managed approvals. This
+  does not enforce review of every command. Stronger user-level project trust
+  has configuration-loading and policy-precedence tradeoffs, documented in the
+  [portable incident/compatibility record](../anti-code%20hub/.agents/resources/CODEX_COMPATIBILITY.md)
+  with official sources checked 2026-09-10. Regression tests, CLI loading and
+  desktop startup are separate evidence gates. Existing history is preserved;
+  commits, global settings and cross-project propagation need separate approval.

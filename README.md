@@ -79,12 +79,12 @@ ANTI_CODE-HUB/
 ```bash
 cp -r "anti-code hub" /path/to/NEW_PROJECT
 cd /path/to/NEW_PROJECT
-python validators/validate_structure.py    # passes out of the box
+python validators/validate_structure.py    # scoped static checks; Python 3.11+
 ```
 
 Then follow `.agents/workflows/01_genesis_prompt.md` — it walks through replacing `[PROJECT NAME]` placeholders, defining any parametric slots the project needs, and `git init`.
 
-The new project arrives with all three engines configured, its own orientation file, enforced permission boundaries, security exclusions, state journals, and a project-neutral validator. **31 files, no assembly.**
+The new project arrives with three engine entry points, orientation, permission settings, context filters, state journals, and a project-neutral validator. Codex sandbox/network defaults apply only when loaded; approval behavior is inherited from the host's policy.
 
 This flow is smoke-tested: the seed is instantiated to a temp path and validated clean both before and after genesis.
 
@@ -118,7 +118,7 @@ These are not interchangeable, and conflating them is how a workspace acquires s
 | File | Reality |
 | :--- | :--- |
 | `.claude/settings.json` | **Enforced.** Denies at the tool-call layer. |
-| `.codex/config.toml` | **Enforced.** Sandbox and approval posture (documented keys only). |
+| `anti-code hub/.codex/config.toml` | Seed sandbox/network defaults when loaded; approvals inherited from app/user/managed policy. No per-command review guarantee. |
 | `.geminiignore` | Context filter. Reduces what a model is shown. Denies nothing. |
 | `.aiexclude` | Context filter. Denies nothing. |
 
@@ -135,11 +135,22 @@ cd "anti-code hub" && python validators/validate_structure.py   # the seed
 
 These check **semantics, not just file existence** — that agent counts agree across documents, that every permission grant points at a real path, that no engine entry file pins a parametric slot, that checkpoint versions match their state files, and that the Codex config uses only documented keys.
 
+For Codex config changes, run the seed's regression suite and independent CLI
+loader probe described in the [compatibility record](anti-code%20hub/.agents/resources/CODEX_COMPATIBILITY.md).
+Template agreement does not prove runtime support; CLI loading does not prove
+desktop task startup. The seed now rejects explicit approval overrides, including
+the retired `untrusted` value, rather than enforcing one.
+
 An earlier version performed 16 existence checks and passed green while the repository contradicted itself in six documented ways. That is the failure mode these replaced.
 
 Staleness **warns without failing** — an aging reference should never block unrelated work.
 
-*Requires Python 3.11+ for full coverage; on older interpreters the TOML check is skipped with an explicit warning and everything else still runs.*
+The seed validator uses exit **0** for completed implemented static checks,
+**1** for confirmed failures, and **2** for incomplete verification. Python 3.11+
+provides TOML parsing; without it, other checks continue, but the skipped Codex
+check is UNVERIFIED rather than success. Confirmed failures take precedence.
+Seed placeholders remain readiness warnings. No exit code certifies desktop
+startup, project-file inclusion or effective permission enforcement.
 
 ---
 
@@ -149,7 +160,7 @@ Staleness **warns without failing** — an aging reference should never block un
 | :--- | :--- |
 | [`.agents/ORIENTATION.md`](.agents/ORIENTATION.md) | **Start here.** Dense current contract, settled decisions |
 | [`main.md`](main.md) | Full operations manual: topology, lifecycle, failure modes |
-| [`.state/DECISIONS.md`](.state/DECISIONS.md) | 10 ADRs — every settled decision *and its reasoning* |
+| [`.state/DECISIONS.md`](.state/DECISIONS.md) | Accepted decisions and their reasoning |
 | [`CHANGELOG.md`](CHANGELOG.md) | Version history |
 | [`FM-NOTES/README.md`](FM-NOTES/README.md) | Triage of historical dual-IDE-era research |
 
@@ -159,6 +170,10 @@ Staleness **warns without failing** — an aging reference should never block un
 
 **Contract V1.1** — structurally validated, both validators passing, seed smoke-tested.
 
-Honest caveat: the contract has been verified but **not yet battle-tested**. No project has been created from this seed and worked in anger. The first real use will surface things no validator can catch — instructions that read clearly but work awkwardly, a slot definition that proves too rigid. That is the difference between *verified* and *proven*.
+Downstream use exposed a real compatibility defect: Mastercam's reported
+2026-09-09 remediation passed governance checks and 29 tests yet failed Codex
+startup on the seed's retired approval value. The [incident record](anti-code%20hub/.agents/resources/CODEX_COMPATIBILITY.md)
+separates that operator report from the hub's local verification. Desktop startup
+after correction has not been verified here.
 
 **Known open:** ~25 sibling projects still carry the legacy fixed-six agent registry. Deferred to a separate system-overhaul effort rather than bolted on here.

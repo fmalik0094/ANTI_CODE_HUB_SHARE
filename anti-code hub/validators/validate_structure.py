@@ -14,7 +14,7 @@ from pathlib import Path
 # seeded projects, so a bare import would abort every check on an older
 # interpreter — losing agent-registry, boot-file, and permission validation to
 # an unrelated TOML dependency. Degrade to skipping just the Codex config check,
-# and say so loudly rather than passing silently.
+# continue other checks, and report incomplete verification with exit 2.
 try:
     import tomllib
 except ImportError:  # pragma: no cover - depends on interpreter version
@@ -25,6 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 REQUIRED_PATHS = [
     ".agents/ORIENTATION.md",
     ".agents/AGENT_REGISTRY.md",
+    ".agents/resources/CODEX_COMPATIBILITY.md",
     ".agents/rules/global.md",
     ".agents/workflows/01_genesis_prompt.md",
     ".agents/workflows/02_entry_and_propose.md",
@@ -50,12 +51,12 @@ BOOT_FILES = ("CLAUDE.md", ".gemini/GEMINI.md", ".codex/instructions.md")
 # exists yet, so their paths are never checked for existence.
 PERMISSION_PATH_EXEMPTIONS = ("C:/", "../", "config/private", "credentials")
 
-# Verified against https://developers.openai.com/codex/config-reference on
-# 2026-08-31. Keep this deliberately narrow: the seed config needs only these
-# documented keys, so an unfamiliar key fails instead of becoming decorative
-# policy that Codex silently ignores.
+# Verified against https://learn.chatgpt.com/docs/config-file/config-reference
+# and https://learn.chatgpt.com/docs/agent-approvals-security on 2026-09-10.
+# This is the narrow SEED contract, not the entire vendor schema. A documented
+# vendor key can still be outside this seed's contract. Runtime loading is a
+# separate check; see check_codex_runtime.py and CODEX_COMPATIBILITY.md.
 CODEX_CONFIG_TOP_LEVEL_KEYS = {
-    "approval_policy",
     "sandbox_mode",
     "sandbox_workspace_write",
 }
@@ -82,7 +83,7 @@ def load_codex_config():
     path = ROOT / ".codex" / "config.toml"
     if tomllib is None:
         print(
-            f"[WARN] Python {sys.version_info.major}.{sys.version_info.minor} "
+            f"[UNVERIFIED] Python {sys.version_info.major}.{sys.version_info.minor} "
             "has no tomllib (needs 3.11+); .codex/config.toml was NOT "
             "validated. Its posture is unverified on this interpreter."
         )
@@ -95,22 +96,35 @@ def load_codex_config():
 
 
 def check_codex_config(config):
-    """Accept only the documented keys and the seed's review-first posture."""
+    """Check seed defaults, not effective host policy or runtime compatibility."""
     errors = []
     if config is None:
         return errors
 
-    unknown_top_level = sorted(set(config) - CODEX_CONFIG_TOP_LEVEL_KEYS)
+    # Handle all explicit policy overrides, including tables, without silently
+    # substituting on-request (which does not ask for each allowed command).
+    if "approval_policy" in config:
+        if config["approval_policy"] == "untrusted":
+            errors.append(
+                ".codex/config.toml: approval_policy = 'untrusted' is retired "
+                "and prevents current Codex startup; remove this setting. "
+                "See .agents/resources/CODEX_COMPATIBILITY.md"
+            )
+        else:
+            errors.append(
+                ".codex/config.toml must omit approval_policy under the generic "
+                "seed contract; approval behavior is inherited from app/user/"
+                "managed policy, not guaranteed by this file"
+            )
+
+    unknown_top_level = sorted(
+        set(config) - CODEX_CONFIG_TOP_LEVEL_KEYS - {"approval_policy"}
+    )
     if unknown_top_level:
         errors.append(
-            ".codex/config.toml contains unsupported top-level key(s): "
+            ".codex/config.toml contains top-level key(s) outside the verified "
+            "seed allowlist (unsupported here, not necessarily by Codex): "
             + ", ".join(unknown_top_level)
-        )
-
-    if config.get("approval_policy") != "untrusted":
-        errors.append(
-            ".codex/config.toml must set approval_policy = 'untrusted' so "
-            "untrusted commands require operator review"
         )
 
     if config.get("sandbox_mode") != "workspace-write":
@@ -130,8 +144,8 @@ def check_codex_config(config):
     )
     if unknown_workspace_write:
         errors.append(
-            ".codex/config.toml contains unsupported "
-            "sandbox_workspace_write key(s): "
+            ".codex/config.toml contains sandbox_workspace_write key(s) "
+            "outside the verified seed allowlist: "
             + ", ".join(unknown_workspace_write)
         )
 
@@ -275,7 +289,18 @@ def main():
             print(f"  - {e}")
         sys.exit(1)
 
-    print("[SUCCESS] All structural and semantic checks passed.")
+    if codex_config is None:
+        print(
+            "[UNVERIFIED] Static verification incomplete: .codex/config.toml "
+            "was not validated; other implemented checks completed."
+        )
+        sys.exit(2)
+
+    print(
+        "[SUCCESS] Required structure and implemented seed-contract checks "
+        "passed; project loading, runtime enforcement and desktop startup "
+        "are not certified."
+    )
     sys.exit(0)
 
 

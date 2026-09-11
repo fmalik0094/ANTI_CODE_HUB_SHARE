@@ -37,6 +37,7 @@ waste tokens. This table is the arbiter. Keep it accurate.
 | `.agents/rules/global.md` | **Canonical** — DENY > ASK > ALLOW precedence |
 | `.agents/workflows/0*.md` | **Canonical** — session lifecycle |
 | `.agents/resources/MODEL_REFERENCE.md` | Reference — read on demand, not preloaded |
+| `.agents/resources/CODEX_COMPATIBILITY.md` | Current Codex compatibility boundary and dated incident evidence — read when changing configuration |
 | `.state/DECISIONS.md` | **Canonical** — accepted architectural decisions |
 | `.state/DELTA_LOG.md` / `EXECUTION_LOG.md` | Historical evidence, not current authority |
 
@@ -82,10 +83,14 @@ against it. Add this project's own settled decisions here as they accumulate.
 - **`.claude/settings.json` is enforced, not advisory.** Unlike
   `.geminiignore`/`.aiexclude` (context filters), its `deny` entries are
   refused at the tool-call layer.
-- **`.codex/config.toml` uses documented controls only.** It asks before
-  untrusted commands, limits command execution to the workspace-write sandbox,
-  and keeps command-spawned network access off. Codex documents no general
-  command-name deny list; do not claim one exists.
+- **`.codex/config.toml` supplies sandbox defaults, not universal approval.**
+  It omits explicit approval policy, retains `workspace-write`, and disables
+  command-spawned network access when this project configuration is loaded.
+  Approval behavior comes from app/user/managed policy. The retired explicit
+  `untrusted` approval value must not return; valid project trust is a different
+  control and can disable project-local config. No command-name deny list or
+  per-command review guarantee is claimed. See
+  [compatibility evidence](resources/CODEX_COMPATIBILITY.md).
 - **Never hand-copy a governance file between repos.** It has repeatedly
   dropped security rules and replaced project-specific content with generic
   boilerplate. Generate from what actually exists in the target.
@@ -106,6 +111,17 @@ against it. Add this project's own settled decisions here as they accumulate.
 **Approval gates — none is implied by the previous one:** validation passing ≠
 authorization to commit; committing ≠ authorization to merge to `main`;
 merging ≠ authorization to push. Each needs the operator to say so.
+
+For Codex configuration changes, also run
+`python -B -m unittest discover -s validators -p test_validate_structure.py`
+and `python -B validators/check_codex_runtime.py`. Unit/semantic agreement is
+not runtime proof, and the CLI probe does not prove desktop task startup.
+
+The seed structural validator returns 0 for completed implemented static checks,
+1 for confirmed failures, and 2 for incomplete verification. Without the TOML
+parser, other checks still run but the Codex check is UNVERIFIED; any confirmed
+failure takes precedence. Placeholder warnings remain separate readiness notes.
+Project loading and effective permissions still require independent evidence.
 
 ---
 

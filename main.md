@@ -33,7 +33,7 @@ ANTI_CODE-HUB/
 │   │   └── workflows/
 │   ├── .claude/settings.json
 │   ├── .codex/
-│   │   ├── config.toml                   # Supported approval/sandbox posture
+│   │   ├── config.toml                   # Sandbox defaults; approvals inherited
 │   │   └── instructions.md               # Codex execution instructions
 │   ├── .gemini/GEMINI.md
 │   ├── .state/                           # Initialized project journals
@@ -107,13 +107,13 @@ for a newly seeded project. A permission claim is valid only when the Claude
 session is actually governed by the applicable file — the hub's for work on the
 hub, the project's own for work in a seeded project.
 
-##### 3. Codex configuration status — SUPPORTED DEFAULT POSTURE
+##### 3. Codex configuration status — DEFAULTS, NOT UNIVERSAL APPROVAL
 
 `anti-code hub/.codex/config.toml` uses only keys verified against OpenAI's
-documented Codex configuration reference on 2026-08-31:
+documented Codex configuration reference on 2026-09-10:
 
-- `approval_policy = "untrusted"` lets known-safe reads run and asks for
-  operator approval before untrusted commands.
+- Explicit `approval_policy` is omitted. App/user/managed policy determines
+  approvals; the seed does not guarantee review of every command.
 - `sandbox_mode = "workspace-write"` permits work inside the active workspace
   while retaining the Codex sandbox boundary.
 - `sandbox_workspace_write.network_access = false` keeps outbound access off
@@ -126,13 +126,20 @@ policy.
 
 The documented schema still provides **no general command-name deny list**.
 `rm`, `sudo`, `curl`, and `wget` are not individually denied by this file and no
-approximate replacement is claimed. The `untrusted` approval policy asks before
-commands Codex classifies as untrusted; `.codex/instructions.md` and operator
-authorization remain separate governance layers.
+approximate replacement is claimed. REQUEST REVIEW is an operator rule, not
+proof of automatic per-command gating by this config.
 
-The seed validator parses the TOML, rejects keys outside the verified allowlist,
-and enforces these exact approval, sandbox, and network values. Source:
-<https://developers.openai.com/codex/config-reference>.
+The seed validator parses TOML, rejects all explicit approval overrides and keys
+outside its narrow allowlist, and checks sandbox/network defaults. It is not a
+complete vendor schema or runtime test. Source:
+[OpenAI configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference).
+
+The old explicit `untrusted` policy is retired, not a supported default. Valid
+user-level project trust is a different mechanism with configuration-loading
+tradeoffs. See the [current boundary and Mastercam incident](anti-code%20hub/.agents/resources/CODEX_COMPATIBILITY.md)
+for the official migration source, stricter-approval alternative, regression
+checks and independent runtime probe. No user/managed settings are changed by
+the seed. CLI loading and desktop startup must be reported separately.
 
 ##### 4. Validator invocation
 
@@ -280,9 +287,11 @@ hard gate even when no tool enforces it.
 *Safeguard:* Tie every enforcement claim to an actual mechanism. In this
 repository, Claude Code permissions are enforced by `.claude/settings.json`.
 Gemini and Codex ignore files filter context and enforce nothing. The seed's
-`.codex/config.toml` sets a documented sandbox and untrusted-command approval
-posture, but it is not a per-command deny list. The seed validator rejects
-unknown configuration keys so decorative controls cannot return silently.
+`.codex/config.toml` supplies sandbox/network defaults, while approval behavior
+is inherited. It is not a per-command deny list. Seed validation rejects
+out-of-contract keys and retired policy overrides, but validators can share a
+stale assumption with a template. Independently exercise the installed runtime;
+see §2.3 for the concrete incident and evidence limits.
 
 ---
 
@@ -307,6 +316,11 @@ The root validator checks this hub. The seed's
 `anti-code hub/validators/validate_structure.py` is project-neutral and checks
 the inherited contract after the seed is copied. Both are manually invoked;
 neither proves application correctness or authorizes Git operations.
+
+The seed validator distinguishes completed implemented static checks (exit 0),
+confirmed failures (1), and incomplete verification (2). An unavailable TOML
+parser skips only that check, never reports overall success, and never hides
+failures found elsewhere. Seed placeholder warnings remain readiness notes.
 
 ##### 4. State utility status
 
